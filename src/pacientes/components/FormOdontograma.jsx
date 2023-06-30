@@ -72,7 +72,7 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
   const cerrarModal = () => {
     changeToolOdonto(null);
     setOpenModal(false);
-    startLoadOdontogramas();
+    // startLoadOdontogramas();
   };
 
   //control alert
@@ -122,13 +122,13 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
       handleOpenSnackbar();
       setFormSubmitted(false);
       setStartSaving(false);
-      cerrarModal();
+      // cerrarModal();
     }
     if (errorMsgRegOdontog.msg === "Hay errores" && formSubmitted) {
       handleOpenSnackbarError();
       setFormSubmitted(false);
       setStartSaving(false);
-      cerrarModal();
+      // cerrarModal();
     }
   }, [errorMsgRegOdontog]);
 

@@ -5,10 +5,11 @@ export const odontogramaSlice = createSlice({
 
   initialState: {
     toolOdontActiva: null,
-    odontogramaActual: null,
+    odontogramaActual: { piezas: [], fecha_odontograma: "" },
     errorMsgRegOdontog: { msg: "", error: "" },
     piezasListOdon: [],
     piezaActiva: null,
+    isUpdated: false,
   },
 
   reducers: {
@@ -59,6 +60,10 @@ export const odontogramaSlice = createSlice({
     clearErrorMessageOdont: (state) => {
       state.errorMsgRegOdontog = { msg: "", error: "" };
     },
+
+    onUpdated: (state, { payload }) => {
+      state.isUpdated = payload;
+    },
   },
 });
 
@@ -70,4 +75,5 @@ export const {
   clearErrorMessageOdont,
   onSetPiezasListOdon,
   onSetPiezaActiva,
+  onUpdated,
 } = odontogramaSlice.actions;

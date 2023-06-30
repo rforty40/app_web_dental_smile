@@ -32,21 +32,8 @@ export const SaludBucalPage = () => {
         display: "flex",
         flexDirection: "column",
         rowGap: "20px",
-        // backgroundColor: "myBgColor.main",
-        // padding: "20px",
-        // boxShadow: "5px 7px 7px rgba(0, 0, 0, 0.5)",
       }}
     >
-      {/* <Typography
-        sx={{
-          fontSize: "22px",
-          fontWeight: "bold",
-          color: "primary.main",
-          backgroundColor: "myBgColor.main",
-        }}
-      >
-        Indicadores de Salud Bucal
-      </Typography> */}
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <Box
           display="flex"
@@ -56,7 +43,7 @@ export const SaludBucalPage = () => {
           sx={{
             boxShadow: "5px 7px 7px rgba(0, 0, 0, 0.5)",
             backgroundColor: "myBgColor.main",
-            padding: "15px 15px 10px 15px",
+            padding: "20px",
           }}
         >
           <Typography
