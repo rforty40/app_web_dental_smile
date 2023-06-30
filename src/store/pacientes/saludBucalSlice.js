@@ -6,6 +6,8 @@ export const saludBucalSlice = createSlice({
   initialState: {
     saludBucalActual: { piezas: [] },
     errorMsgRegSaludB: { msg: "", error: "" },
+    dataSaludBucal: null,
+    isUpdatedSB: false,
   },
 
   reducers: {
@@ -37,12 +39,23 @@ export const saludBucalSlice = createSlice({
       }
     },
 
+    addIdSaludBucal: (state, { payload }) => {
+      state.saludBucalActual.id_saludb = payload;
+    },
+
     changeRegisterSaludB: (state, { payload }) => {
       state.errorMsgRegSaludB = payload;
     },
 
+    onSetDataBucal: (state, { payload }) => {
+      state.dataSaludBucal = payload;
+    },
+
     clearErrorMessageSaludB: (state) => {
       state.errorMsgRegSaludB = { msg: "", error: "" };
+    },
+    onUpdatedSB: (state, { payload }) => {
+      state.isUpdatedSB = payload;
     },
   },
 });
@@ -52,4 +65,7 @@ export const {
   onChangeIndiceSimplificado,
   changeRegisterSaludB,
   clearErrorMessageSaludB,
+  onUpdatedSB,
+  onSetDataBucal,
+  addIdSaludBucal,
 } = saludBucalSlice.actions;

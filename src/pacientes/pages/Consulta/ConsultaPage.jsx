@@ -25,6 +25,7 @@ import {
   usePacienteStore,
   usePagosStore,
   usePlanesStore,
+  useSaludBucalStore,
   useTratamientosStore,
   useUiStore,
 } from "../../../hooks";
@@ -71,8 +72,11 @@ export const ConsultaPage = () => {
 
   const { startLoadOdontogramas } = useOdontogramaStore();
 
+  const { startLoadSaludBucalArr, startLoadingSBBox2 } = useSaludBucalStore();
+
   const { id_pac, id_cons } = useParams();
 
+  //
   useEffect(() => {
     changePage();
     startLoadConsulta(id_pac, id_cons);
@@ -81,6 +85,7 @@ export const ConsultaPage = () => {
     );
   }, []);
 
+  //
   useEffect(() => {
     if (consultaActiva) {
       startLoadSignVit();
@@ -90,6 +95,8 @@ export const ConsultaPage = () => {
       startLoadTratamientos();
       startLoadPagos();
       startLoadOdontogramas();
+      startLoadSaludBucalArr();
+      startLoadingSBBox2();
     }
   }, [consultaActiva]);
 

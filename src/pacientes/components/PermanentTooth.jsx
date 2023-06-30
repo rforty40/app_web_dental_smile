@@ -11,8 +11,12 @@ import { arrUrlIcons } from "../helpers";
 
 export const PermanentTooth = ({ numberTooth, flexDir }) => {
   //store
-  const { toolOdontActiva, updateOdontoActual, odontogramaActual, isUpdated } =
-    useOdontogramaStore();
+  const {
+    toolOdontActiva,
+    updateOdontoActual,
+    odontogramaActual,
+    isUpdatedOdon,
+  } = useOdontogramaStore();
 
   //hooks
   const [stateIdPieza, setStateIdPieza] = useState(null);
@@ -26,7 +30,7 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
   const [colorDistal, setColorDistal] = useState("myBgColor.main");
 
   useEffect(() => {
-    if (isUpdated) {
+    if (isUpdatedOdon) {
       //obtener pieza
       const piezaDental = odontogramaActual.piezas.find(
         (pieza) => pieza.numberTooth === numberTooth
@@ -82,7 +86,7 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
         );
       }
     }
-  }, [isUpdated]);
+  }, [isUpdatedOdon]);
 
   useEffect(() => {
     if (

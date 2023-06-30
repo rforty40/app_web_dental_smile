@@ -68,18 +68,6 @@ export const arrUrlIcons = [
   "",
 ];
 
-// {
-//   id: 69,
-//   numberTooth: 27,
-//   movilidad: 1,
-//   recesion: null,
-//   oclusal: null,
-//   vestibular: null,
-//   mesial: null,
-//   lingual: null,
-//   distal: null
-// }
-
 const listPiezasDentales = [
   { num: 11, label: "Incisivo Central Superior Derecho" },
   { num: 12, label: "Incisivo Lateral Superior Derecho" },
@@ -141,17 +129,6 @@ const listPiezasDentales = [
   { num: 84, label: "Primer Molar Inferior Derecho" },
   { num: 85, label: "Segundo Molar Inferior Derecho" },
 ];
-// {
-//   id: 52,
-//   numberTooth: 41,
-//   movilidad: null,
-//   recesion: null,
-//   oclusal: null,
-//   vestibular: 1,
-//   mesial: null,
-//   lingual: null,
-//   distal: 2
-// }
 
 const simbologia = [
   "",
@@ -210,6 +187,8 @@ export const convertOdonListPiezas = (odontogramaListPzaDent) => {
       pieza_dental: pieza.num_dent + ".%" + labelPieza.label,
       // denticion: "ddd",
       superficies: carasDentales(pieza),
+      movilidad: pieza.mov_dent,
+      recesion: pieza.rec_dent,
       nota: !pieza.nota_dent ? "" : pieza.nota_dent,
     };
   });

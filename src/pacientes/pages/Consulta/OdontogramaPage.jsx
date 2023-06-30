@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { TbDental } from "react-icons/tb";
-import { ButtonCustom, CustomTable, DeleteConfirm } from "../../../ui";
+import { ButtonCustom, CustomTable } from "../../../ui";
 import { FormModalNota, FormOdontograma } from "../../components";
 import { useDataStore, useOdontogramaStore } from "../../../hooks";
 import { Edit, EditNoteOutlined } from "@mui/icons-material";
@@ -12,12 +12,10 @@ const TABLE_HEAD_PIEZAS = [
     label: "Pieza dental",
     alignLeft: true,
   },
-  // {
-  //   id: "denticion",
-  //   label: "Dentición",
-  //   alignLeft: true,
-  // },
+
   { id: "superficies", label: "Superficies", alignLeft: true },
+  { id: "movilidad", label: "Movilidad", alignLeft: true },
+  { id: "recesion", label: "Recesión", alignLeft: true },
   { id: "nota", label: "Nota", alignLeft: true },
 ];
 

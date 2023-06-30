@@ -10,9 +10,12 @@ import { arrUrlIcons } from "../helpers";
 
 export const TemporalTooth = ({ numberTooth, flexDir }) => {
   //store
-  const { toolOdontActiva, updateOdontoActual, odontogramaActual } =
-    useOdontogramaStore();
-  // const [faceOclusal, setFaceOclusal] = useState(0);
+  const {
+    toolOdontActiva,
+    updateOdontoActual,
+    odontogramaActual,
+    isUpdatedOdon,
+  } = useOdontogramaStore();
 
   //hooks
   const [stateIdPieza, setStateIdPieza] = useState(null);
@@ -24,7 +27,7 @@ export const TemporalTooth = ({ numberTooth, flexDir }) => {
   const [colorDistal, setColorDistal] = useState("myBgColor.main");
 
   useEffect(() => {
-    if (odontogramaActual) {
+    if (isUpdatedOdon) {
       //obtener pieza
       const piezaDental = odontogramaActual.piezas.find(
         (pieza) => pieza.numberTooth === numberTooth
@@ -72,7 +75,7 @@ export const TemporalTooth = ({ numberTooth, flexDir }) => {
         );
       }
     }
-  }, []);
+  }, [isUpdatedOdon]);
 
   useEffect(() => {
     if (

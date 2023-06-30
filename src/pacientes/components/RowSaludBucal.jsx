@@ -12,59 +12,64 @@ import { useSaludBucalStore } from "../../hooks";
 
 export const RowSaludBucal = ({ piezasList }) => {
   //store
-  const { updateSaludBActual } = useSaludBucalStore();
+  const { updateSaludBActual, isUpdatedSB, saludBucalActual } =
+    useSaludBucalStore();
   //hook
+  const [stateIdPieza, setStateIdPieza] = useState(null);
   const [statePieza, setStatePieza] = useState("");
   const [statePlaca, setStatePlaca] = useState(0);
   const [stateCalculo, setStateCalculo] = useState(0);
   const [stateGingivitis, setStateGingivitis] = useState(0);
 
+  const [blockSelects, setBlockSelects] = useState(false);
+
+  useEffect(() => {
+    if (statePieza === "Ausente" || statePieza === "") {
+      setStatePlaca(0);
+      setStateCalculo(0);
+      setStateGingivitis(0);
+      setBlockSelects(true);
+    } else {
+      setBlockSelects(false);
+    }
+  }, [statePieza]);
+
+  useEffect(() => {
+    if (isUpdatedSB) {
+      //obtener pieza
+      const piezaDental = saludBucalActual.piezas.find(
+        (pieza) => pieza.fila === piezasList.fila
+      );
+
+      if (piezaDental !== undefined) {
+        setStateIdPieza(piezaDental.id);
+        setStatePieza(piezaDental.pieza);
+        setStatePlaca(piezaDental.placa);
+        setStateCalculo(piezaDental.calculo);
+        setStateGingivitis(piezaDental.gingivitis);
+      }
+    } else {
+      setStateIdPieza(null);
+      setStatePieza("");
+      setStatePlaca(0);
+      setStateCalculo(0);
+      setStateGingivitis(0);
+    }
+  }, [isUpdatedSB]);
+
   useEffect(() => {
     updateSaludBActual({
+      id: stateIdPieza,
       fila: piezasList.fila,
       pieza: statePieza,
       placa: statePlaca,
       calculo: stateCalculo,
       gingivitis: stateGingivitis,
     });
-  }, [statePieza, , statePlaca, stateCalculo, stateGingivitis]);
+  }, [statePieza, statePlaca, stateCalculo, stateGingivitis]);
 
   return (
     <>
-      {/* <RadioGroup
-        row
-        sx={{
-          display: "flex",
-          flexWrap: "nowrap",
-
-          "& .MuiFormControlLabel-root > .MuiButtonBase-root": {
-            padding: "0px 10px",
-          },
-        }}
-      >
-        {piezas.map((pieza, index) => {
-          return (
-            <FormControlLabel
-              key={index}
-              value={pieza}
-              control={<Radio onClick={handleClick} />}
-              label={
-                <Typography
-                  sx={{
-                    fontSize: "15px",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {pieza === 0 ? "Ausente" : pieza}
-                </Typography>
-              }
-              labelPlacement="start"
-            />
-          );
-        })}
-      </RadioGroup> */}
-
       <RadioGroupCustom
         radioOptions={piezasList.piezas}
         hookRadio={statePieza}
@@ -82,6 +87,7 @@ export const RowSaludBucal = ({ piezasList }) => {
         }}
       />
       <Select
+        disabled={blockSelects}
         value={statePlaca}
         onChange={(event) => {
           setStatePlaca(event.target.value);
@@ -109,6 +115,7 @@ export const RowSaludBucal = ({ piezasList }) => {
       </Select>
 
       <Select
+        disabled={blockSelects}
         value={stateCalculo}
         onChange={(event) => {
           setStateCalculo(event.target.value);
@@ -136,6 +143,7 @@ export const RowSaludBucal = ({ piezasList }) => {
       </Select>
 
       <Select
+        disabled={blockSelects}
         value={stateGingivitis}
         onChange={(event) => {
           setStateGingivitis(event.target.value);

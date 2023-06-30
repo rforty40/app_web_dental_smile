@@ -59,7 +59,6 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
     startSavingOdontograma,
     errorMsgRegOdontog,
     startDeletingOdontograma,
-    startLoadOdontogramas,
   } = useOdontogramaStore();
 
   //hook del formulario

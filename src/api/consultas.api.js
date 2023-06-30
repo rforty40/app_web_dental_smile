@@ -135,3 +135,31 @@ export const updatePiezaDental = async (id_pDent, pzaDental) =>
 
 export const deletePiezaDental = async (id_pDent) =>
   await dentalSmileApi.delete(`/odontograma/pieza_dental/delete/${id_pDent}`);
+
+//
+
+//salud bucal
+export const getSaludBucal = async (id_consulta) =>
+  await dentalSmileApi.get(`/salud_bucal/consulta/${id_consulta}`);
+
+export const createSaludBucal = async (id_consulta, saludBucal) =>
+  await dentalSmileApi.post(
+    `/consulta/${id_consulta}/salud_bucal/create`,
+    saludBucal
+  );
+export const updateSaludBucal = async (id_saludb, saludBucal) =>
+  await dentalSmileApi.put(`/salud_bucal/update/${id_saludb}`, saludBucal);
+
+//
+
+//pieza salud bucal
+export const createPzaSaludBucal = async (id_saludb, pzaSaludB) =>
+  await dentalSmileApi.post(
+    `/salud_bucal/${id_saludb}/pieza_dental/create`,
+    pzaSaludB
+  );
+export const updatePzaSaludBucal = async (id_pDentalSb, pzaSaludB) =>
+  await dentalSmileApi.put(
+    `/salud_bucal/pieza_dental/update/${id_pDentalSb}`,
+    pzaSaludB
+  );

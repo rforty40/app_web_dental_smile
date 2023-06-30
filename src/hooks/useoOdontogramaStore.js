@@ -7,7 +7,7 @@ import {
   onSetOdontogramaConsAct,
   onSetPiezaActiva,
   onSetPiezasListOdon,
-  onUpdated,
+  onUpdatedOdont,
 } from "../store";
 import {
   createOdontograma,
@@ -38,7 +38,7 @@ export const useOdontogramaStore = () => {
     errorMsgRegOdontog,
     piezasListOdon,
     piezaActiva,
-    isUpdated,
+    isUpdatedOdon,
   } = useSelector((state) => state.odontograma);
 
   const { consultaActiva } = useSelector((state) => state.consultas);
@@ -58,7 +58,7 @@ export const useOdontogramaStore = () => {
   };
 
   const startLoadOdontogramas = async () => {
-    dispatch(onUpdated(false));
+    dispatch(onUpdatedOdont(false));
     try {
       const { data } = await getOdontogramas(
         "consulta",
@@ -69,7 +69,7 @@ export const useOdontogramaStore = () => {
 
       dispatch(onSetPiezasListOdon(convertOdonListPiezas(data[0].piezas)));
 
-      dispatch(onUpdated(true));
+      dispatch(onUpdatedOdont(true));
       //
     } catch (error) {
       console.log(error);
@@ -178,7 +178,7 @@ export const useOdontogramaStore = () => {
     errorMsgRegOdontog,
     piezasListOdon,
     piezaActiva,
-    isUpdated,
+    isUpdatedOdon,
 
     //* Métodos
     changeToolOdonto,
