@@ -9,6 +9,7 @@ import {
 } from "../../../ui";
 import { FormModalDiag } from "../../components";
 import { useDataStore, useDiagnosticosStore } from "../../../hooks";
+import { TbDentalBroken } from "react-icons/tb";
 
 const TABLE_HEAD_DIAG = [
   {
@@ -126,7 +127,7 @@ export const DiagnosticoConsultaPage = () => {
             colorth="celesteNeon.main"
             txt_b="Agregar"
             fontW="bold"
-            iconB={<NoteAdd />}
+            iconB={<TbDentalBroken />}
             propsXS={{ boxShadow: "none !important" }}
             onClick={openModalFormDiag}
           />

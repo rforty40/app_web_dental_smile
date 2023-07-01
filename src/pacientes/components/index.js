@@ -23,3 +23,5 @@ export * from "./SimbologiaOdontograma";
 export * from "./FormOdontograma";
 export * from "./FormModalNota";
 export * from "./RowSaludBucal";
+export * from "./ViewRecursoFoto";
+export * from "./FormRecursoFoto";

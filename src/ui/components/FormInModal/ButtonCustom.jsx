@@ -14,12 +14,14 @@ export const ButtonCustom = ({
   tipoBtn = "button",
   flexDir = "row",
   txt_b_size = "16px",
+  desactived = false,
   propsXS,
 }) => {
   const [colorTextBtn, setColorTextBtn] = useState(colort);
 
   return (
     <Box
+      disabled={desactived}
       component="button"
       type={tipoBtn}
       onClick={onClick}

@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { NoteAdd } from "@mui/icons-material";
+import {
+  FaPrescription,
+  FaPrescriptionBottle,
+  FaPrescriptionBottleAlt,
+  FaTooth,
+} from "react-icons/fa";
 import { ButtonCustom } from "../../../ui";
 import { FormModalTratam, TratamientoItem } from "../../components";
 import { useTratamientosStore } from "../../../hooks";
@@ -61,7 +67,7 @@ export const TratamientoConsultaPage = () => {
             Tratamiento
           </Typography>
           <ButtonCustom
-            altura="45px"
+            altura="40px"
             txt_b_size="14px"
             flexDir="column-reverse"
             colorf="transparent"
@@ -70,7 +76,7 @@ export const TratamientoConsultaPage = () => {
             colorth="celesteNeon.main"
             txt_b="Agregar"
             fontW="bold"
-            iconB={<NoteAdd />}
+            iconB={<FaTooth />}
             propsXS={{ boxShadow: "none !important" }}
             onClick={openModalFormTratam}
           />

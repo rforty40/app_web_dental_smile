@@ -22,6 +22,7 @@ import { ButtonCustom, CustomAlert, DeleteConfirm } from "../../../ui";
 import { FormModalPago } from "../../components";
 import { usePagosStore, useTratamientosStore } from "../../../hooks";
 import { invertDateFormat } from "../../../agenda/helpers/formatedDataCite";
+import { RiMoneyDollarBoxFill } from "react-icons/ri";
 
 const TABLE_HEAD_PAGO = [
   { id: "pago_por", label: "Pago por" },
@@ -149,7 +150,7 @@ export const PagosConsultaPage = () => {
           colorth="celesteNeon.main"
           txt_b="Agregar"
           fontW="bold"
-          iconB={<NoteAdd />}
+          iconB={<RiMoneyDollarBoxFill />}
           onClick={openModalFormPago}
           propsXS={{ boxShadow: "none !important" }}
         />

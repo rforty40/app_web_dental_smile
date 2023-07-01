@@ -182,6 +182,7 @@ export const SaludBucalPage = () => {
             </Typography>
             <div>
               <ButtonCustom
+                desactived={startSaving}
                 altura="45px"
                 txt_b_size="14px"
                 flexDir="column-reverse"

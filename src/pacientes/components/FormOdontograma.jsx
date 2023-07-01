@@ -175,6 +175,7 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
 
           <Box display="flex" flexDirection="row" columnGap="15px">
             <ButtonCustom
+              desactived={startSaving}
               altura="45px"
               txt_b_size="14px"
               flexDir="column-reverse"
@@ -208,6 +209,7 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
               />
             )}
             <ButtonCustom
+              desactived={startSaving}
               altura="45px"
               txt_b_size="14px"
               flexDir="column-reverse"

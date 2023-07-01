@@ -10,6 +10,7 @@ import {
 } from "../../../ui";
 import { FormModalExam } from "../../components/FormModalExam";
 import { useDataStore, useExamenesStore } from "../../../hooks";
+import { BsFileEarmarkMedicalFill } from "react-icons/bs";
 
 const TABLE_HEAD_EXAM = [
   { id: "region_afectada", label: "Región afectada", alignLeft: true },
@@ -118,7 +119,7 @@ export const ExamenesConsultaPage = () => {
             colorth="celesteNeon.main"
             txt_b="Agregar"
             fontW="bold"
-            iconB={<NoteAdd />}
+            iconB={<BsFileEarmarkMedicalFill />}
             propsXS={{ boxShadow: "none !important" }}
             onClick={openModalFormExam}
           />
