@@ -13,4 +13,5 @@ export * from "./pacientes/pacientesSlice";
 export * from "./ui/uiSlice";
 export * from "./pacientes/odontogramaSlice";
 export * from "./pacientes/saludBucalSlice";
+export * from "./pacientes/recursosFotosSlice";
 export * from "./store";

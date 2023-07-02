@@ -6,24 +6,15 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { CloseOutlined, UploadOutlined } from "@mui/icons-material";
+import { CloseOutlined } from "@mui/icons-material";
 
-export const ViewRecursoFoto = ({ stateDialog, setStateDialog }) => {
+export const ViewRecursoFoto = ({ stateDialog, setStateDialog, dataFoto }) => {
   //
   const fileInputRef = useRef();
-
+  console.log(dataFoto);
   //
   const cerrarModal = () => {
     setStateDialog(false);
-  };
-
-  const onFileInputChange = ({ target }) => {
-    console.log(target);
-    if (target.files === 0) return;
-    console.log(target.files);
-    console.log("subiendo archivos");
-
-    // dispatch(startUploadingFiles(target.files));
   };
 
   return (
@@ -40,82 +31,64 @@ export const ViewRecursoFoto = ({ stateDialog, setStateDialog }) => {
         },
       }}
     >
-      {/* <DialogTitle
-      padding="16px 10px 16px  20px !important"
-      display="flex"
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <Typography
-        sx={{
-          fontWeight: "bold",
-          fontSize: "25px",
-          fontStyle: "italic",
-          textShadow: "0px 1px 1px rgba(0, 0, 0, 0.4)",
-        }}
-      >
-        aaaaaaaaaa
-      </Typography>
-
-      <IconButton onClick={cerrarModal}>
-        <CloseOutlined style={{ fontSize: "25px", color: "#602a90" }} />
-      </IconButton>
-    </DialogTitle> */}
       <DialogContent
         sx={{
           display: "flex",
           flexDirection: "row",
           columnGap: "35px",
           padding: "15px",
-          // justifyContent: "space-between",
-          // width: "100%",
           height: "100vh",
-          // paddingBottom: "20px",
         }}
       >
-        <img
-          style={
-            {
-              // maxWidth: "90%",
-              // maxHeight: "90%",
-              // objectPosition: "center",
-              // objectFit: "scale-down",
-            }
-          }
-          src="/assets/img/fondos/fondohistory.jpg"
-          alt="image"
-        />
+        <img src={dataFoto.url} alt="image" />
+
         <Box display="flex" flexDirection="column" flexBasis="25%">
           <Box alignSelf="end">
             <IconButton onClick={cerrarModal}>
               <CloseOutlined style={{ fontSize: "25px", color: "#602a90" }} />
             </IconButton>
-            <IconButton
-              color="primary"
-              // disabled={isSaving}
-              onClick={() => fileInputRef.current.click()}
-            >
-              <UploadOutlined />
-            </IconButton>
           </Box>
-          <Typography fontWeight="bold" fontSize="18px" color="primary.main">
-            Fecha
-          </Typography>
-          <Typography fontWeight="bold" fontSize="18px" color="primary.main">
-            Título
-          </Typography>
-          <Typography fontWeight="bold" fontSize="18px" color="primary.main">
-            Descripción
-          </Typography>
 
-          <input
-            type="file"
-            multiple
-            ref={fileInputRef}
-            onChange={onFileInputChange}
-            style={{ display: "none" }}
-          />
+          <Box display="flex" flexDirection="column" rowGap="30px">
+            <div>
+              <Typography
+                fontWeight="bold"
+                fontSize="18px"
+                color="primary.main"
+              >
+                Fecha
+              </Typography>
+              <Typography fontWeight="bold" fontSize="16px" color="black">
+                {dataFoto.fecha}
+              </Typography>
+            </div>
+
+            <div>
+              <Typography
+                fontWeight="bold"
+                fontSize="18px"
+                color="primary.main"
+              >
+                Título
+              </Typography>
+              <Typography fontWeight="bold" fontSize="16px" color="black">
+                {dataFoto.titulo}
+              </Typography>
+            </div>
+
+            <div>
+              <Typography
+                fontWeight="bold"
+                fontSize="18px"
+                color="primary.main"
+              >
+                Descripción
+              </Typography>
+              <Typography fontWeight="bold" fontSize="16px" color="black">
+                {dataFoto.descr}
+              </Typography>
+            </div>
+          </Box>
         </Box>
       </DialogContent>
     </Dialog>

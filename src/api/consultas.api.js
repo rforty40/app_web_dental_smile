@@ -163,3 +163,27 @@ export const updatePzaSaludBucal = async (id_pDentalSb, pzaSaludB) =>
     `/salud_bucal/pieza_dental/update/${id_pDentalSb}`,
     pzaSaludB
   );
+
+//
+
+//recurso fotografico
+export const getRecursosFoto = async (id_consulta) =>
+  await dentalSmileApi.get(`/consulta/${id_consulta}/recursos`);
+
+export const createRecursoFoto = async (id_consulta, recurso) =>
+  await dentalSmileApi.post(`/consulta/${id_consulta}/recurso/create`, recurso);
+
+export const updateRecursoFoto = async (id_recurso, recurso) =>
+  await dentalSmileApi.put(`/recurso/update/${id_recurso}`, recurso);
+
+export const deleteRecursoFoto = async (id_recurso) =>
+  await dentalSmileApi.delete(`/recurso/delete/${id_recurso}`);
+
+//
+
+//fotos
+export const createFotografia = async (id_recurso, foto) =>
+  await dentalSmileApi.post(`/recurso/${id_recurso}/fotografia/create`, foto);
+
+export const deleteFotografia = async (id_foto) =>
+  await dentalSmileApi.delete(`/fotografia/delete/${id_foto}`);

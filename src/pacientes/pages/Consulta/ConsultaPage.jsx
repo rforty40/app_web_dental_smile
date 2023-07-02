@@ -25,6 +25,7 @@ import {
   usePacienteStore,
   usePagosStore,
   usePlanesStore,
+  useRecursosFotosStore,
   useSaludBucalStore,
   useTratamientosStore,
   useUiStore,
@@ -74,6 +75,8 @@ export const ConsultaPage = () => {
 
   const { startLoadSaludBucalArr, startLoadingSBBox2 } = useSaludBucalStore();
 
+  const { startLoadRecursosFoto } = useRecursosFotosStore();
+
   const { id_pac, id_cons } = useParams();
 
   //
@@ -97,6 +100,7 @@ export const ConsultaPage = () => {
       startLoadOdontogramas();
       startLoadSaludBucalArr();
       startLoadingSBBox2();
+      startLoadRecursosFoto();
     }
   }, [consultaActiva]);
 

@@ -1,8 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
-  Button,
-  Card,
   CardMedia,
   CircularProgress,
   Dialog,
@@ -11,9 +9,12 @@ import {
   Grid,
   Icon,
   IconButton,
+  Portal,
   Typography,
 } from "@mui/material";
 import {
+  CancelOutlined,
+  CheckCircleOutline,
   Close,
   CloseOutlined,
   Delete,
@@ -21,24 +22,65 @@ import {
   Save,
   UploadOutlined,
 } from "@mui/icons-material";
-import { ButtonCustom, IconTextField } from "../../ui";
-import { FaUserEdit } from "react-icons/fa";
+import { ButtonCustom, CustomAlert, IconTextField } from "../../ui";
 import { MdOutlineTitle, MdSubtitles } from "react-icons/md";
+import { useRecursosFotosStore } from "../../hooks";
 
 export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
   //store
-
+  const {
+    startSavingRecursoFoto,
+    errorMsgRegRecurso,
+    recursoActivo,
+    changeDataRecuroFoto,
+  } = useRecursosFotosStore();
   //hooks
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [stateTitle, setStateTitle] = useState("");
   const [stateDescription, setStateDescription] = useState("");
   const fileInputRef = useRef();
-  const [selectedImages, setSelectedImages] = useState([]);
   const [arrImgSelect, setArrImgSelect] = useState([]);
+  const [arrImgUrlDel, setArrImgUrlDel] = useState([]);
 
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const [msgTypeFileProblem, setMsgTypeFileProblem] = useState(false);
+  //cargarDatos
+  useEffect(() => {
+    if (recursoActivo) {
+      setStateTitle(recursoActivo.titulo);
+      setStateDescription(recursoActivo.descripcion);
+      setSelectedImages(recursoActivo.fotos);
+      setArrImgSelect(recursoActivo.fotos);
+      setArrImgUrlDel([]);
+      console.log("Aaa");
+    }
+    // else {
+    //   setStateTitle("");
+    //   setStateDescription("");
+    //   setSelectedImages([]);
+    //   setArrImgSelect([]);
+    //   setArrImgUrlDel([]);
+    // }
+  }, [recursoActivo]);
+  console.log(recursoActivo);
+  console.log("Imagenes actuales", selectedImages.length);
+  console.log("imagenes nuevas", arrImgSelect.length);
+  console.log("imagenes eliminadas", arrImgUrlDel.length);
   //handlers
+
+  const resetInput = () => {
+    setStateTitle("");
+    setStateDescription("");
+    setSelectedImages([]);
+    setArrImgSelect([]);
+    setArrImgUrlDel([]);
+  };
+
   const cerrarModal = () => {
+    resetInput();
+    changeDataRecuroFoto(null);
     setStateDialog(false);
   };
 
@@ -47,29 +89,52 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
     setArrImgSelect([]);
   };
 
-  const handleImageDelete = (index) => {
+  const handleImageDelete = (index, image) => {
+    if (typeof image === "object") {
+      setArrImgUrlDel([...arrImgUrlDel, image.id]);
+    }
+
     setSelectedImages((prevImages) => {
       const updatedImages = [...prevImages];
+      // if (updatedImages.length > 0) {
       updatedImages.splice(index, 1);
       return updatedImages;
+      // } else {
+      //   return [];
+      // }
     });
+
     setArrImgSelect((prevImages) => {
       const updatedImages = [...prevImages];
+      // if (index !== 0) {
       updatedImages.splice(index, 1);
       return updatedImages;
+      // } else {
+      //   return [];
+      // }
     });
   };
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
+
     files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const image = e.target.result;
-        setSelectedImages((prevImages) => [...prevImages, image]);
-        setArrImgSelect((prevImages) => [...prevImages, file]);
-      };
-      reader.readAsDataURL(file);
+      if (
+        file.size < 10485760 &&
+        (file.name.includes(".jpg") || file.name.includes(".jpeg"))
+      ) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const image = e.target.result;
+          setSelectedImages((prevImages) => [...prevImages, image]);
+          setArrImgSelect((prevImages) => [...prevImages, file]);
+        };
+        reader.readAsDataURL(file);
+
+        //
+      } else {
+        setMsgTypeFileProblem(true);
+      }
     });
   };
 
@@ -85,27 +150,42 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
       arrImgSelect,
     };
 
-    // await startSavingOdontograma(recursoData);
+    await startSavingRecursoFoto(recursoData, arrImgUrlDel);
+  };
+
+  //control alert
+  const [stateSnackbar, setStateSnackbar] = useState(false);
+  const handleCloseSnackbar = () => {
+    setStateSnackbar(false);
+  };
+  const handleOpenSnackbar = () => {
+    setStateSnackbar(true);
+  };
+
+  //control alert error
+  const [stateSnackbarError, setStateSnackbarError] = useState(false);
+  const handleCloseSnackbarError = () => {
+    setStateSnackbarError(false);
+  };
+  const handleOpenSnackbarError = () => {
+    setStateSnackbarError(true);
   };
 
   //manejador de errores todos los campos
-  // useEffect(() => {
-  //   if (errorMsgRegOdontog.msg === "Sin errores" && formSubmitted) {
-  //     handleOpenSnackbar();
-  //     setFormSubmitted(false);
-  //     setStartSaving(false);
-  //     // cerrarModal();
-  //   }
-  //   if (errorMsgRegOdontog.msg === "Hay errores" && formSubmitted) {
-  //     handleOpenSnackbarError();
-  //     setFormSubmitted(false);
-  //     setStartSaving(false);
-  //     // cerrarModal();
-  //   }
-  // }, [errorMsgRegOdontog]);
-  // console.log(arrImgSelect);
-  // console.log(selectedImages);
-  //
+  useEffect(() => {
+    if (errorMsgRegRecurso.msg === "Sin errores" && formSubmitted) {
+      handleOpenSnackbar();
+      setFormSubmitted(false);
+      setIsSaving(false);
+      cerrarModal();
+    }
+    if (errorMsgRegRecurso.msg === "Hay errores" && formSubmitted) {
+      handleOpenSnackbarError();
+      setFormSubmitted(false);
+      setIsSaving(false);
+    }
+  }, [errorMsgRegRecurso]);
+
   return (
     <Dialog
       maxWidth="xl"
@@ -159,6 +239,7 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
           )}
 
           <ButtonCustom
+            desactived={isSaving}
             altura="45px"
             txt_b_size="14px"
             flexDir="column-reverse"
@@ -243,12 +324,24 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
           paddingTop="20px"
           alignItems="center"
         >
-          <Typography fontWeight="bold" fontSize="17px" color="primary.main">
-            Fotografías
-          </Typography>
+          <div>
+            <Typography fontWeight="bold" fontSize="17px" color="primary.main">
+              Fotografías
+            </Typography>
+            {msgTypeFileProblem && (
+              <Typography
+                fontWeight="bold"
+                fontSize="14px"
+                color="primary.main"
+              >
+                {"Solo se permiten archivos JPEG (.jpg), no superiores a 10MB."}
+              </Typography>
+            )}
+          </div>
           <div>
             <input
-              accept="image/*"
+              // accept="image/*"
+              accept=".jpg"
               type="file"
               multiple
               ref={fileInputRef}
@@ -292,19 +385,24 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
                     alignItems: "end",
                   }}
                 >
-                  <IconButton
-                    onClick={() => {
-                      handleImageDelete(index);
-                    }}
-                  >
-                    <CloseOutlined
-                      style={{ fontSize: "25px", color: "#602a90" }}
-                    />
-                  </IconButton>
-
+                  <Box display="flex" flexDirection="row" alignItems="center">
+                    <Typography color="primary" fontWeight="bold">
+                      {typeof image === "string" ? "Nueva" : ""}
+                    </Typography>
+                    <IconButton
+                      onClick={() => {
+                        handleImageDelete(index, image);
+                      }}
+                    >
+                      <CloseOutlined
+                        style={{ fontSize: "25px", color: "#602a90" }}
+                      />
+                    </IconButton>
+                  </Box>
                   <CardMedia
                     component="img"
-                    image={image}
+                    // image={image}
+                    image={typeof image === "object" ? image.url : image}
                     alt={`Uploaded ${index}`}
                     sx={{
                       objectFit: "contain",
@@ -315,6 +413,27 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
             ))}
         </Grid>
       </DialogContent>
+      <Portal>
+        <CustomAlert
+          stateSnackbar={stateSnackbar}
+          handleCloseSnackbar={handleCloseSnackbar}
+          title={"Completado"}
+          message="Recurso Fotográfico actualizado"
+          colorbg="blueSecondary.main"
+          colortxt="white"
+          iconAlert={<CheckCircleOutline sx={{ color: "white" }} />}
+        />
+
+        <CustomAlert
+          stateSnackbar={stateSnackbarError}
+          handleCloseSnackbar={handleCloseSnackbarError}
+          title={"No se realizaron los cambios"}
+          message={errorMsgRegRecurso.error}
+          colorbg="error.main"
+          colortxt="white"
+          iconAlert={<CancelOutlined sx={{ color: "white" }} />}
+        />
+      </Portal>
     </Dialog>
   );
 };

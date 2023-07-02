@@ -16,6 +16,7 @@ import {
   CheckCircleOutline,
   Close,
   DeleteOutlined,
+  Restore,
   Save,
 } from "@mui/icons-material";
 
@@ -59,6 +60,7 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
     startSavingOdontograma,
     errorMsgRegOdontog,
     startDeletingOdontograma,
+    startLoadOdontogramas,
   } = useOdontogramaStore();
 
   //hook del formulario
@@ -67,11 +69,13 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
   //hook guardando odontograma
   const [startSaving, setStartSaving] = useState(false);
 
+  //hook desahaciendo cambios
+  const [startDelChanges, setStartDelChanges] = useState(false);
+
   //cerrarModal
   const cerrarModal = () => {
     changeToolOdonto(null);
     setOpenModal(false);
-    // startLoadOdontogramas();
   };
 
   //control alert
@@ -99,6 +103,13 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
   const handleOpenConfirmDelOdon = () => {
     cerrarModal();
     setOpenConfirmDelOdon(true);
+  };
+
+  //deshacerCambios
+  const desahacerCambios = async () => {
+    setStartDelChanges(true);
+    await startLoadOdontogramas();
+    setStartDelChanges(false);
   };
 
   //eliminar odontograma
@@ -189,6 +200,25 @@ export const FormOdontograma = ({ openModal, setOpenModal }) => {
               propsXS={{ boxShadow: "none !important" }}
               onClick={handleOpenConfirmDelOdon}
             />
+            {startDelChanges ? (
+              <CircularProgress color="primary" />
+            ) : (
+              <ButtonCustom
+                desactived={startSaving}
+                altura="45px"
+                txt_b_size="14px"
+                flexDir="column-reverse"
+                colorf="transparent"
+                colorh="transparent"
+                colort="primary.main"
+                colorth="black"
+                txt_b="Deshacer cambios"
+                fontW="bold"
+                iconB={<Restore />}
+                propsXS={{ boxShadow: "none !important" }}
+                onClick={desahacerCambios}
+              />
+            )}
 
             {startSaving ? (
               <CircularProgress color="primary" />

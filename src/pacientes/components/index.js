@@ -25,3 +25,4 @@ export * from "./FormModalNota";
 export * from "./RowSaludBucal";
 export * from "./ViewRecursoFoto";
 export * from "./FormRecursoFoto";
+export * from "./RecursoFotoItem";

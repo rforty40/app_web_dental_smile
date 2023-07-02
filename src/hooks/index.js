@@ -20,3 +20,4 @@ export * from "./useGastosStore";
 export * from "./useAuthStore";
 export * from "./useoOdontogramaStore";
 export * from "./useSaludBucalStore";
+export * from "./useRecursosFotosStore";

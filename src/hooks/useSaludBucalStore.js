@@ -48,10 +48,8 @@ export const useSaludBucalStore = () => {
     try {
       const { data } = await getSaludBucal(consultaActiva.id_consulta);
 
-      console.log(data);
-      console.log(formatearDataSaludBucal(data[0]));
-
       dispatch(onSetSaludBucalAct(formatearDataSaludBucal(data[0])));
+
       dispatch(onUpdatedSB(true));
 
       //
@@ -80,24 +78,23 @@ export const useSaludBucalStore = () => {
         id_salud_bucal = saludBucalActual.id_saludb;
       }
 
-      console.log(id_salud_bucal);
-      console.log(saludBucalActual);
+      const arrPromisesPiezas = [];
+
       for (const pieza of saludBucalActual.piezas) {
         //registro de pieza
-        console.log(pieza.id);
+
         if (pieza.id === null) {
-          console.log("Se crea pieza");
-          console.log(formatearDataPzaSBtoBD(pieza));
-          await createPzaSaludBucal(
-            id_salud_bucal,
-            formatearDataPzaSBtoBD(pieza)
+          arrPromisesPiezas.push(
+            createPzaSaludBucal(id_salud_bucal, formatearDataPzaSBtoBD(pieza))
           );
         } else {
-          // console.log("Se actualiza pieza");
-          await updatePzaSaludBucal(pieza.id, formatearDataPzaSBtoBD(pieza));
+          arrPromisesPiezas.push(
+            updatePzaSaludBucal(pieza.id, formatearDataPzaSBtoBD(pieza))
+          );
         }
       }
 
+      await Promise.all(arrPromisesPiezas);
       await startLoadSaludBucalArr();
 
       dispatch(changeRegisterSaludB({ msg: "Sin errores", error: "" }));

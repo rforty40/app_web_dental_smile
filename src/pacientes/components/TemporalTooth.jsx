@@ -36,9 +36,13 @@ export const TemporalTooth = ({ numberTooth, flexDir }) => {
       if (piezaDental !== undefined) {
         setStateIdPieza(piezaDental.id);
 
-        if ([1, 2].includes(piezaDental.oclusal)) {
-          setColorOclusal(piezaDental.oclusal === 1 ? "red" : "blue");
-        }
+        setColorOclusal(
+          piezaDental.oclusal === 1
+            ? "red"
+            : piezaDental.oclusal === 2
+            ? "blue"
+            : "myBgColor.main"
+        );
 
         setIconOclusal(piezaDental.oclusal === null ? 18 : piezaDental.oclusal);
 
@@ -73,6 +77,14 @@ export const TemporalTooth = ({ numberTooth, flexDir }) => {
             ? "red"
             : "blue"
         );
+      } else {
+        setStateIdPieza(null);
+        setColorOclusal("myBgColor.main");
+        setIconOclusal(null);
+        setColorVestibular("myBgColor.main");
+        setColorMesial("myBgColor.main");
+        setColorLingual("myBgColor.main");
+        setColorDistal("myBgColor.main");
       }
     }
   }, [isUpdatedOdon]);

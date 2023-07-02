@@ -39,10 +39,16 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
       if (piezaDental !== undefined) {
         setStateIdPieza(piezaDental.id);
 
-        if ([1, 2].includes(piezaDental.oclusal)) {
-          setColorOclusal(piezaDental.oclusal === 1 ? "red" : "blue");
-        } else {
-        }
+        // if ([1, 2].includes(piezaDental.oclusal)) {
+        setColorOclusal(
+          piezaDental.oclusal === 1
+            ? "red"
+            : piezaDental.oclusal === 2
+            ? "blue"
+            : "myBgColor.main"
+        );
+        // } else {
+        // }
 
         setIconOclusal(piezaDental.oclusal === null ? 18 : piezaDental.oclusal);
 
@@ -84,6 +90,16 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
             ? "red"
             : "blue"
         );
+      } else {
+        setStateIdPieza(null);
+        setColorOclusal("myBgColor.main");
+        setIconOclusal(null);
+        setStateRecesion(" ");
+        setStateMovilidad(" ");
+        setColorVestibular("myBgColor.main");
+        setColorMesial("myBgColor.main");
+        setColorLingual("myBgColor.main");
+        setColorDistal("myBgColor.main");
       }
     }
   }, [isUpdatedOdon]);

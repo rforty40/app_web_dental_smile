@@ -98,31 +98,34 @@ export const useOdontogramaStore = () => {
         id_odontograma = odontogramaActual.id_odontograma;
       }
 
+      const arrPromisesPiezas = [];
       for (const pieza of odontogramaActual.piezas) {
         //registro de pieza
         if (pieza.id === null && !verifyPiezaDentalEmpty(pieza)) {
           // console.log("Se crea pieza");
-          await createPiezaDental(
-            id_odontograma,
-            formatearDataPiezaDentalToBD(pieza)
+          arrPromisesPiezas.push(
+            createPiezaDental(
+              id_odontograma,
+              formatearDataPiezaDentalToBD(pieza)
+            )
           );
         }
 
         //actualizacion de pieza
         if (pieza.id !== null && !verifyPiezaDentalEmpty(pieza)) {
           // console.log("Se actualiza pieza");
-          await updatePiezaDental(
-            pieza.id,
-            formatearDataPiezaDentalToBD(pieza)
+          arrPromisesPiezas.push(
+            updatePiezaDental(pieza.id, formatearDataPiezaDentalToBD(pieza))
           );
         }
 
         //eliminacion de pieza
         if (pieza.id !== null && verifyPiezaDentalEmpty(pieza)) {
           // console.log("Se elimina pieza");
-          await deletePiezaDental(pieza.id);
+          arrPromisesPiezas.push(deletePiezaDental(pieza.id));
         }
       }
+      await Promise.all(arrPromisesPiezas);
 
       await startLoadOdontogramas();
 
