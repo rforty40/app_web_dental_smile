@@ -391,7 +391,7 @@ export const ListaIngresos = () => {
           txt_b="Abrir"
           fontW="bold"
           onClick={() => {
-            handleChangeTabsCons(3);
+            handleChangeTabsCons(8);
           }}
           iconB={<FaRegFolderOpen />}
           propsXS={{ boxShadow: "none !important" }}

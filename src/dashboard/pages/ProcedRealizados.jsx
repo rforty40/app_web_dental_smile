@@ -25,7 +25,7 @@ export const ProcedRealizados = () => {
   } = useDashboardStore();
 
   const handleOpenCons = () => {
-    handleChangeTabsCons(2);
+    handleChangeTabsCons(6);
   };
 
   const actualizarListaPac = () => {

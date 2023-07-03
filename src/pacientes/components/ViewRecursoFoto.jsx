@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import {
   Box,
   Dialog,
@@ -10,8 +9,7 @@ import { CloseOutlined } from "@mui/icons-material";
 
 export const ViewRecursoFoto = ({ stateDialog, setStateDialog, dataFoto }) => {
   //
-  const fileInputRef = useRef();
-  console.log(dataFoto);
+
   //
   const cerrarModal = () => {
     setStateDialog(false);

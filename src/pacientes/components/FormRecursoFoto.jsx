@@ -17,7 +17,6 @@ import {
   CheckCircleOutline,
   Close,
   CloseOutlined,
-  Delete,
   DeleteOutline,
   Save,
   UploadOutlined,
@@ -46,6 +45,7 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
   const [selectedImages, setSelectedImages] = useState([]);
 
   const [msgTypeFileProblem, setMsgTypeFileProblem] = useState(false);
+
   //cargarDatos
   useEffect(() => {
     if (recursoActivo) {
@@ -54,22 +54,10 @@ export const FormRecursoFoto = ({ stateDialog, setStateDialog, titleForm }) => {
       setSelectedImages(recursoActivo.fotos);
       setArrImgSelect(recursoActivo.fotos);
       setArrImgUrlDel([]);
-      console.log("Aaa");
     }
-    // else {
-    //   setStateTitle("");
-    //   setStateDescription("");
-    //   setSelectedImages([]);
-    //   setArrImgSelect([]);
-    //   setArrImgUrlDel([]);
-    // }
   }, [recursoActivo]);
-  console.log(recursoActivo);
-  console.log("Imagenes actuales", selectedImages.length);
-  console.log("imagenes nuevas", arrImgSelect.length);
-  console.log("imagenes eliminadas", arrImgUrlDel.length);
-  //handlers
 
+  //handlers
   const resetInput = () => {
     setStateTitle("");
     setStateDescription("");

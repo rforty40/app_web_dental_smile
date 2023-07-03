@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
+
 import { addMonths } from "date-fns";
 import { Box } from "@mui/material";
 import { DeleteForever } from "@mui/icons-material";
@@ -14,7 +14,7 @@ import { localizer } from "../helpers/calendarLocalizer";
 import { AgendaModal, CalendarEvent, ViewAgendaTable } from "../components/";
 import { CustomAlert, DeleteConfirm, Topbar } from "../../ui";
 import { useAgendaStore, usePacienteStore, useUiStore } from "../../hooks";
-import { extraerFecha2, invertDateFormat } from "../helpers/formatedDataCite";
+import { extraerFecha2 } from "../helpers/formatedDataCite";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 //
@@ -70,10 +70,6 @@ export const AgendaPage = () => {
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
       backgroundColor: event.estado === "Pendiente" ? "#116482" : "#d32f2f",
-      // backgroundColor:
-      //   event.estado === "Pendiente"
-      //     ? "rgba(84, 214, 44, 0.16)"
-      //     : "rgba(255, 72, 66, 0.16)",
     };
 
     return {
@@ -180,11 +176,6 @@ export const AgendaPage = () => {
   const navegationFn = (newDate, view, action) => {
     const dateNextMonth = extraerFecha2(addMonths(newDate, 1));
     startLoadCitesAgenda(extraerFecha2(newDate), dateNextMonth);
-    // console.log(
-    //   invertDateFormat(extraerFecha2(newDate)) +
-    //     " - " +
-    //     invertDateFormat(dateNextMonth)
-    // );
   };
 
   return (

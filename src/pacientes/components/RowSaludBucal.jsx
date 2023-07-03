@@ -1,19 +1,15 @@
-import {
-  FormControlLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  Typography,
-} from "@mui/material";
 import { useEffect, useState } from "react";
+import { MenuItem, Select } from "@mui/material";
 import { RadioGroupCustom } from "../../ui";
 import { useSaludBucalStore } from "../../hooks";
 
 export const RowSaludBucal = ({ piezasList }) => {
+  //
+
   //store
   const { updateSaludBActual, isUpdatedSB, saludBucalActual } =
     useSaludBucalStore();
+
   //hook
   const [stateIdPieza, setStateIdPieza] = useState(null);
   const [statePieza, setStatePieza] = useState("");

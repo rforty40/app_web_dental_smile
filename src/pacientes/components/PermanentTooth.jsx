@@ -309,7 +309,6 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
           }}
           onClick={({}) => {
             changeColorOclusal();
-            console.log("Oclusal/Incisal");
           }}
         >
           {![null, 1, 2, 18].includes(iconOclusal) ? (
@@ -347,7 +346,6 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
           }}
           onClick={() => {
             changeColorVestibular();
-            console.log("Vestibular");
           }}
         />
 
@@ -373,7 +371,6 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
           }}
           onClick={() => {
             changeColorMesial();
-            console.log("Mesial");
           }}
         />
 
@@ -401,7 +398,6 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
           }}
           onClick={() => {
             changeColorLingual();
-            console.log("Palatina/Lingual");
           }}
         />
 
@@ -430,7 +426,6 @@ export const PermanentTooth = ({ numberTooth, flexDir }) => {
           }}
           onClick={() => {
             changeColorDistal();
-            console.log("Distal");
           }}
         />
       </Box>

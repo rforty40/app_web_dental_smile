@@ -14,7 +14,7 @@ import { ButtonCustom, IconTextField } from "../../ui";
 import { useAgendaStore, useConsultasStore, useUiStore } from "../../hooks";
 import { useEffect } from "react";
 
-export const ViewCita = ({ closeCitaView, setOpen }) => {
+export const ViewCita = ({ closeCitaView }) => {
   //
   const navigate = useNavigate();
 
@@ -45,10 +45,10 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
   };
 
   useEffect(() => {
-    changeStateViewCita(true);
     // console.log("se renderiza");
+    changeStateViewCita(true);
+    // console.log("se desmontan");
     return () => {
-      // console.log("se desmontan");
       changeStateViewCita(false);
     };
   }, []);
@@ -81,15 +81,9 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
       display="flex"
       sx={{
         width: 600,
-
-        // backgroundImage: `linear-gradient(38deg, rgba(245,247,250,1) 0%, rgba(17,100,130,1) 100%)`,
         backgroundColor: "rgba(0,0,0,0.9)",
-        // backgroundColor: "black",
-        // background:
-        //   "radial-gradient(ellipse at top, #f5f7fa), radial-gradient(ellipse at bottom, #602a90);",
         padding: "15px",
         borderRadius: "5px",
-        // border: "5px solid #f5f7fa",
       }}
     >
       <Grid
@@ -138,7 +132,6 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
             fullWidth
             label="Paciente:"
             type="text"
-            // defaultValue={"Hello World"}
             value={activeCita.paciente}
             colorTxt="white"
             font_we="bold"
@@ -170,7 +163,6 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
                 <PersonSearch
                   sx={{
                     color: "#02ECEE",
-                    // ":hover": { color: "#02ECEE" },
                   }}
                 />
               </IconButton>
@@ -317,7 +309,6 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
           justifyContent="center"
         >
           <ButtonCustom
-            // tipoBtn="submit"
             altura="40px"
             colorf="white"
             colorh="error.main"
@@ -330,7 +321,6 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
           />
 
           <ButtonCustom
-            // tipoBtn="submit"
             altura="40px"
             colorf="white"
             colorh="blueSecondary.main"
@@ -343,7 +333,6 @@ export const ViewCita = ({ closeCitaView, setOpen }) => {
           />
 
           <ButtonCustom
-            // tipoBtn="submit"
             altura="40px"
             colorf="white"
             colorh="primary.main"

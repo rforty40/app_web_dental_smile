@@ -84,7 +84,6 @@ export const useOdontogramaStore = () => {
   const startSavingOdontograma = async () => {
     dispatch(clearErrorMessageOdont());
     try {
-      // console.log(odontogramaActual);
       let id_odontograma = 0;
 
       if (Object.keys(odontogramaActual).length < 4) {
@@ -102,7 +101,6 @@ export const useOdontogramaStore = () => {
       for (const pieza of odontogramaActual.piezas) {
         //registro de pieza
         if (pieza.id === null && !verifyPiezaDentalEmpty(pieza)) {
-          // console.log("Se crea pieza");
           arrPromisesPiezas.push(
             createPiezaDental(
               id_odontograma,
@@ -113,7 +111,6 @@ export const useOdontogramaStore = () => {
 
         //actualizacion de pieza
         if (pieza.id !== null && !verifyPiezaDentalEmpty(pieza)) {
-          // console.log("Se actualiza pieza");
           arrPromisesPiezas.push(
             updatePiezaDental(pieza.id, formatearDataPiezaDentalToBD(pieza))
           );
@@ -121,7 +118,6 @@ export const useOdontogramaStore = () => {
 
         //eliminacion de pieza
         if (pieza.id !== null && verifyPiezaDentalEmpty(pieza)) {
-          // console.log("Se elimina pieza");
           arrPromisesPiezas.push(deletePiezaDental(pieza.id));
         }
       }

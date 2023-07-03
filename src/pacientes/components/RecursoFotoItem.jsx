@@ -43,9 +43,6 @@ export const RecursoFotoItem = ({
     >
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <Box display="flex" flexDirection="column" maxWidth="85%">
-          {/* <Typography fontWeight="bold" fontSize="17px" color="primary.main">
-            Título
-          </Typography> */}
           <Typography
             fontWeight="bold"
             fontSize="18px"
@@ -113,31 +110,23 @@ export const RecursoFotoItem = ({
         {recursoFoto.fotos.length > 0 &&
           recursoFoto.fotos.map((foto, index) => (
             <Grid item xs={4} key={index}>
-              <Box
+              <CardMedia
+                component="img"
+                image={foto.url}
+                alt={foto.url}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "end",
+                  objectFit: "contain",
+                  cursor: "pointer",
                 }}
-              >
-                <CardMedia
-                  component="img"
-                  image={foto.url}
-                  alt={foto.url}
-                  sx={{
-                    objectFit: "contain",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    handleOpenFotoView({
-                      url: foto.url,
-                      titulo: recursoFoto.titulo,
-                      descr: recursoFoto.descripcion,
-                      fecha: recursoFoto.fecha_recurso,
-                    });
-                  }}
-                />
-              </Box>
+                onClick={() => {
+                  handleOpenFotoView({
+                    url: foto.url,
+                    titulo: recursoFoto.titulo,
+                    descr: recursoFoto.descripcion,
+                    fecha: recursoFoto.fecha_recurso,
+                  });
+                }}
+              />
             </Grid>
           ))}
       </Grid>

@@ -107,7 +107,7 @@ export const Ganancias = () => {
           txt_b="Abrir"
           fontW="bold"
           onClick={() => {
-            handleChangeTabsCons(3);
+            handleChangeTabsCons(8);
           }}
           iconB={<FaRegFolderOpen />}
           propsXS={{ boxShadow: "none !important" }}
@@ -210,7 +210,6 @@ export const Ganancias = () => {
           className="box-shadow"
           sx={{
             backgroundColor: "rgba(255,255,255,0.9)",
-            // padding: "10px",
             borderRadius: "5px",
           }}
         >

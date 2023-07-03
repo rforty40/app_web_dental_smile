@@ -15,7 +15,6 @@ import {
   DeleteForever,
   DeleteOutlined,
   EditNoteOutlined,
-  NoteAdd,
   SaveOutlined,
 } from "@mui/icons-material";
 import { ButtonCustom, CustomAlert, DeleteConfirm } from "../../../ui";

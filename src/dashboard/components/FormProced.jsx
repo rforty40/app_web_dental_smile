@@ -97,8 +97,6 @@ export const FormProced = ({
       });
       return {
         dataForm: {
-          // codigo: "",
-          // procedimiento: "",
           precio: "",
           descripcion: "",
         },

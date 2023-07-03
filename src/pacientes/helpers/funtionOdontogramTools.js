@@ -25,7 +25,6 @@ const nombresClases = [
 export const changeSelectedIcon = () => {
   document.querySelector(".contenedorIcons").addEventListener("click", (e) => {
     //
-    console.log("first");
 
     nombresClases.forEach((clase) => {
       if (document.getElementById(clase).contains(e.target)) {

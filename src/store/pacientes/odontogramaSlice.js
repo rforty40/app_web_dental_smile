@@ -26,10 +26,8 @@ export const odontogramaSlice = createSlice({
       const existente = state.odontogramaActual.piezas.some(
         (pieceDent) => pieceDent.numberTooth === payload.numberTooth
       );
-      // console.log(existente);
-      // console.log(payload);
+
       if (existente) {
-        // console.log("actualizado");
         //actualizacion
         state.odontogramaActual.piezas = state.odontogramaActual.piezas.map(
           (pieceDent) => {
@@ -40,7 +38,6 @@ export const odontogramaSlice = createSlice({
           }
         );
       } else {
-        // console.log("registro");
         state.odontogramaActual.piezas.push(payload);
       }
     },

@@ -20,10 +20,8 @@ export const saludBucalSlice = createSlice({
       const existente = state.saludBucalActual.piezas.some(
         (pieceDent) => pieceDent.fila === payload.fila
       );
-      // console.log(existente);
-      // console.log(payload);
+
       if (existente) {
-        // console.log("actualizado");
         //actualizacion
         state.saludBucalActual.piezas = state.saludBucalActual.piezas.map(
           (pieceDent) => {
@@ -34,7 +32,6 @@ export const saludBucalSlice = createSlice({
           }
         );
       } else {
-        // console.log("registro");
         state.saludBucalActual.piezas.push(payload);
       }
     },

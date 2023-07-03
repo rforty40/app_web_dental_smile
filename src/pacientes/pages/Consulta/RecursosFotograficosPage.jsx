@@ -1,21 +1,7 @@
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Typography,
-} from "@mui/material";
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { AddPhotoAlternate } from "@mui/icons-material";
 import { ButtonCustom, DeleteConfirm } from "../../../ui";
-import {
-  AddPhotoAlternate,
-  CloseOutlined,
-  UploadOutlined,
-} from "@mui/icons-material";
-import { useRef, useState } from "react";
 import { FormRecursoFoto, RecursoFotoItem } from "../../components";
 import { useRecursosFotosStore } from "../../../hooks";
 

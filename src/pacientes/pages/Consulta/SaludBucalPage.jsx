@@ -1,11 +1,4 @@
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Icon,
-  Portal,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Grid, Portal, Typography } from "@mui/material";
 import { RowSaludBucal } from "../../components";
 import {
   CancelOutlined,
@@ -100,7 +93,6 @@ export const SaludBucalPage = () => {
 
   //manejador de errores todos los campos
   useEffect(() => {
-    console.log(formSubmitted, errorMsgRegSaludB.msg);
     if (errorMsgRegSaludB.msg === "Sin errores" && formSubmitted) {
       handleOpenSnackbar();
       setFormSubmitted(false);
@@ -127,20 +119,13 @@ export const SaludBucalPage = () => {
         }
       }
 
-      console.log(totalFilas);
-      console.log(sumPlaca);
       return {
         promPlaca: parseFloat(sumPlaca / totalFilas).toFixed(2),
         promCalculos: parseFloat(sumCalculo / totalFilas).toFixed(2),
         promGengivitis: parseFloat(sumGengivitis / totalFilas).toFixed(2),
-        // promPlaca: sumPlaca / totalFilas,
-        // promCalculos: sumCalculo / totalFilas,
-        // promGengivitis: sumGengivitis / totalFilas,
       };
     }
   }, [saludBucalActual]);
-
-  console.log(totales);
 
   return (
     <Box

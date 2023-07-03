@@ -1,15 +1,17 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, CardMedia, Grid, Typography } from "@mui/material";
 import { ButtonCustom, CustomStandardTF } from "../../ui";
 import { DeleteOutlined, EditNoteOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useConsultasStore, useUiStore } from "../../hooks";
 import { invertDateFormat } from "../../agenda/helpers/formatedDataCite";
 import { FaRegFolderOpen } from "react-icons/fa";
+import { ViewRecursoFoto } from "./ViewRecursoFoto";
+import { useState } from "react";
 
 export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
-  const colorChoose = iteratorColor % 2 > 0 ? true : false;
   const navigate = useNavigate();
 
+  //store
   const {
     changeDataConsulta,
     changeStateFormCons,
@@ -18,6 +20,12 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
   } = useConsultasStore();
 
   const { handleChangeTabsCons } = useUiStore();
+
+  //hook
+  const [opeViewFoto, setOpeViewFoto] = useState(false);
+  const [stateDataFoto, setStateDataFoto] = useState({});
+
+  const colorChoose = iteratorColor % 2 > 0 ? true : false;
 
   const handleOpenFormEditCons = () => {
     changeDataConsulta(consultaItem);
@@ -35,6 +43,12 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
     handleChangeTabsCons(0);
     navigate(`${consultaItem.id_consulta}`);
   };
+
+  const handleOpenFotoView = (dataFoto) => {
+    setStateDataFoto(dataFoto);
+    setOpeViewFoto(true);
+  };
+
   const diagnosticosStr = consultaItem.diagnosticos.reduce((acc, diag) => {
     acc = `${acc}\n${
       diag.Diagnosticos.split("-")[0] +
@@ -53,7 +67,7 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
         boxShadow="3px 5px 5px rgba(0, 0, 0, 0.5)"
         sx={{
           //
-          cursor: "pointer",
+
           padding: "20px 0px",
           marginTop: "5px",
           borderRadius: "10px",
@@ -223,6 +237,42 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
                 </>
               );
             })}
+          <Grid container spacing={2} paddingTop="10px">
+            {consultaItem.fotos.length > 0 &&
+              consultaItem.fotos.map((foto, index) => {
+                return (
+                  <Grid
+                    item
+                    xs={3}
+                    key={index}
+                    display="flex"
+                    flexDirection="row"
+                  >
+                    <CardMedia
+                      component="img"
+                      image={foto.url}
+                      alt={foto.url}
+                      sx={{
+                        objectFit: "contain",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        handleOpenFotoView({
+                          ...foto,
+                        });
+                      }}
+                    />
+                  </Grid>
+                );
+              })}
+          </Grid>
+          <CustomStandardTF
+            value={""}
+            helperText="Recursos Fotograficos"
+            colorTxt={colorChoose ? "white" : "black"}
+            colorHelp={colorChoose ? "#02ECEE" : "#602A90"}
+            colorBrd={colorChoose ? "white" : "#602A90"}
+          />
         </Grid>
 
         <Grid
@@ -280,6 +330,12 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
           />
         </Grid>
       </Grid>
+
+      <ViewRecursoFoto
+        stateDialog={opeViewFoto}
+        setStateDialog={setOpeViewFoto}
+        dataFoto={stateDataFoto}
+      />
     </>
   );
 };

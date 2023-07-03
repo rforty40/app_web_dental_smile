@@ -63,28 +63,22 @@ export const useRecursosFotosStore = () => {
       //independientemente estar o no registrado en el recurso se puede registrar imagenes
       const arrayPromesasImgs = [];
 
-      //   if (dataRecurso.arrImgSelect.length > 0) {
-      console.log(dataRecurso.arrImgSelect.length);
       for (const file of dataRecurso.arrImgSelect) {
         if (file instanceof File) {
           arrayPromesasImgs.push(uploadImage(file));
         }
       }
-      // }
 
       //urls de images registradas
       const idsUrlsFotos = await Promise.all(arrayPromesasImgs);
 
-      console.log(idsUrlsFotos);
-
       if (recursoActivo) {
         //actualizacion
-        console.log("actualizacion");
+
         //eliminacion de imagenes en bd y cloudinary
         const arrRegAndDelImg = [];
 
         if (arrImgUrlDel.length > 0) {
-          console.log(arrImgUrlDel);
           for (const fileId of arrImgUrlDel) {
             arrRegAndDelImg.push(deleteFotografia(fileId));
           }
@@ -100,7 +94,6 @@ export const useRecursosFotosStore = () => {
         //ejecutando promesas para eliminar y registrar imagenes
         await Promise.all(arrRegAndDelImg);
 
-        console.log("todo bien");
         //actualizar datos en la BD
         const { data } = await updateRecursoFoto(recursoActivo.id_recurso, {
           titulo_recurso: dataRecurso.stateTitle,
@@ -114,7 +107,6 @@ export const useRecursosFotosStore = () => {
         //
       } else {
         //registro
-        console.log("registro");
 
         //registro en la BD
         const { data: dataRecursoBD } = await createRecursoFoto(
@@ -143,7 +135,6 @@ export const useRecursosFotosStore = () => {
       dispatch(onChangeRegErrRecurso({ msg: "Sin errores", error: "" }));
     } catch (error) {
       console.log(error);
-      //   console.log(error.response.data.message);
 
       //cargar mensaje de error
       dispatch(

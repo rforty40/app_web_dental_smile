@@ -47,7 +47,6 @@ export const FormModalNota = ({ openModal, setOpenModal }) => {
   const [stateNota, setStateNota] = useState("");
   //cerrarModal
   const cerrarModal = () => {
-    console.log("wwwwwwww");
     setOpenModal(false);
     onChangePiezaActiva(null);
   };
@@ -68,9 +67,8 @@ export const FormModalNota = ({ openModal, setOpenModal }) => {
 
   //funcion enviar los datos
   const onSubmit = async () => {
-    console.log("first");
     if (stateNota.trim().length === 0) return;
-    console.log("first2");
+
     await updateNotaPiezaDental(stateNota);
     cerrarModal();
     handleOpenSnackbar();

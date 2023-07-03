@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
-import { NoteAdd } from "@mui/icons-material";
-import {
-  FaPrescription,
-  FaPrescriptionBottle,
-  FaPrescriptionBottleAlt,
-  FaTooth,
-} from "react-icons/fa";
+import { FaTooth } from "react-icons/fa";
 import { ButtonCustom } from "../../../ui";
 import { FormModalTratam, TratamientoItem } from "../../components";
 import { useTratamientosStore } from "../../../hooks";

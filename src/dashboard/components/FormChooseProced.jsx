@@ -52,11 +52,8 @@ export const FormChooseProced = ({
   //hooks
 
   const [stateOpenAutocom, setStateOpenAutocom] = useState(false);
-  // const [stateSearch, setStateSearch] = useState("");
-
   const [stateTitulos, setStateTitulos] = useState({ id: 0, label: "" });
   const [stateSubTitulos, setStateSubTitulos] = useState({ id: 0, label: "" });
-
   const [stateProcedList, setStateProcedList] = useState({ id: "", label: "" });
 
   const cerrarModal = () => {
@@ -138,7 +135,6 @@ export const FormChooseProced = ({
           "& .MuiPaper-root": {
             width: "650px",
             height: "600px",
-            // backgroundColor: "colorIconMolar.main",
             position: "absolute",
             right: 10,
           },

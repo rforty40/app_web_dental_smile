@@ -52,9 +52,7 @@ export const CalendarEvent = ({ event }) => {
     <ClickAwayListener onClickAway={handleTooltipClose}>
       <div>
         <StyledTooltip
-          title={
-            <ViewCita closeCitaView={handleTooltipClose} setOpen={setOpen} />
-          }
+          title={<ViewCita closeCitaView={handleTooltipClose} />}
           arrow
           placement="top"
           onClose={handleTooltipClose}
