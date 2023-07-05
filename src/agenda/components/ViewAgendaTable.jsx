@@ -16,7 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const TABLE_HEAD = [
-  { id: "cuando", label: "¿Cuando?", alignLeft: true },
+  { id: "cuando", label: "¿Cuándo?", alignLeft: true },
   { id: "hora", label: "Hora", alignLeft: true },
   { id: "fecha", label: "Fecha", alignLeft: true },
   { id: "paciente", label: "Paciente", alignLeft: true },

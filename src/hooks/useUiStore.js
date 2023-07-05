@@ -4,6 +4,10 @@ import {
   onChangeSidebar,
   onChangeHookTabs,
   onChangeHookTabsCons,
+  onSavePacienteSidebar,
+  onDeletePacienteSidebar,
+  onSaveConsultaSidebar,
+  onDeleteConsultaSidebar,
 } from "../store";
 
 //
@@ -14,9 +18,13 @@ export const useUiStore = () => {
 
   const dispatch = useDispatch();
 
-  const { isSidebarOpen, pageActive, hookTabs, hookTabsCons } = useSelector(
-    (state) => state.ui
-  );
+  const {
+    isSidebarOpen,
+    pageActive,
+    hookTabs,
+    hookTabsCons,
+    listaPacienteSidebar,
+  } = useSelector((state) => state.ui);
 
   const changeSidebar = (flag) => {
     dispatch(onChangeSidebar(flag));
@@ -49,6 +57,22 @@ export const useUiStore = () => {
     dispatch(onChangeHookTabsCons(newValue));
     localStorage.setItem("lastTabPacienteCons", newValue);
   };
+
+  const savePacienteSidebar = (paciente) => {
+    dispatch(onSavePacienteSidebar(paciente));
+  };
+
+  const deletePacienteSidebar = (paciente) => {
+    dispatch(onDeletePacienteSidebar(paciente));
+  };
+
+  const saveConsultaSidebar = (consulta) => {
+    dispatch(onSaveConsultaSidebar(consulta));
+  };
+
+  const deleteConsultaSidebar = (consulta) => {
+    dispatch(onDeleteConsultaSidebar(consulta));
+  };
   //
   return {
     //* Propiedades
@@ -56,11 +80,16 @@ export const useUiStore = () => {
     pageActive,
     hookTabs,
     hookTabsCons,
+    listaPacienteSidebar,
 
     //* Métodos
     changeSidebar,
     changePage,
     handleChangeTabs,
     handleChangeTabsCons,
+    savePacienteSidebar,
+    deletePacienteSidebar,
+    saveConsultaSidebar,
+    deleteConsultaSidebar,
   };
 };

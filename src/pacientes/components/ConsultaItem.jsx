@@ -2,7 +2,7 @@ import { Box, CardMedia, Grid, Typography } from "@mui/material";
 import { ButtonCustom, CustomStandardTF } from "../../ui";
 import { DeleteOutlined, EditNoteOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useConsultasStore, useUiStore } from "../../hooks";
+import { useConsultasStore, usePacienteStore, useUiStore } from "../../hooks";
 import { invertDateFormat } from "../../agenda/helpers/formatedDataCite";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { ViewRecursoFoto } from "./ViewRecursoFoto";
@@ -19,8 +19,9 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
     changeStateDelCons,
   } = useConsultasStore();
 
-  const { handleChangeTabsCons } = useUiStore();
+  const { handleChangeTabsCons, saveConsultaSidebar } = useUiStore();
 
+  const { pacienteActivo } = usePacienteStore();
   //hook
   const [opeViewFoto, setOpeViewFoto] = useState(false);
   const [stateDataFoto, setStateDataFoto] = useState({});
@@ -42,6 +43,11 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
     changeDataConsulta(consultaItem);
     handleChangeTabsCons(0);
     navigate(`${consultaItem.id_consulta}`);
+    saveConsultaSidebar({
+      id_pac: pacienteActivo.id,
+      id_con: consultaItem.id_consulta,
+      fecha: consultaItem.fecha_consulta,
+    });
   };
 
   const handleOpenFotoView = (dataFoto) => {

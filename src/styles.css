@@ -113,3 +113,7 @@ body,
   box-shadow: 5px 7px 7px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
 }
+
+.pro-arrow-wrapper > .pro-arrow {
+  border-color: #3a1956 !important;
+}

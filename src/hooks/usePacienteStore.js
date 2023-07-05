@@ -56,6 +56,7 @@ export const usePacienteStore = () => {
   };
 
   const changeDataPaciente = (dataPac) => {
+    console.log("first");
     dispatch(onLoadPacActivo(dataPac));
   };
 
@@ -75,7 +76,7 @@ export const usePacienteStore = () => {
   const startLoadPaciente = async (id) => {
     try {
       const { data } = await getPacienteById(id);
-
+      console.log("first");
       dispatch(onLoadPacActivo(formatearDataPacToTable([data])[0]));
     } catch (error) {
       console.log("Error cargando datos del paciente por ID");

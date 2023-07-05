@@ -424,7 +424,7 @@ export const AgendaModal = () => {
                   error={stateMotivo.trim().length === 0 && formSubmitted}
                   helperText={
                     stateMotivo.trim().length === 0
-                      ? "Debe agregar un motivo de la cita"
+                      ? "Debe agregar el motivo de la cita"
                       : ""
                   }
                   colorIcon="primary.main"

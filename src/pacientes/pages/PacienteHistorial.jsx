@@ -16,7 +16,8 @@ import { useAntecedenteStore, usePacienteStore, useUiStore } from "../../hooks";
 export const PacienteHistorial = () => {
   //
 
-  const { changePage, hookTabs, handleChangeTabs } = useUiStore();
+  const { changePage, hookTabs, handleChangeTabs, savePacienteSidebar } =
+    useUiStore();
 
   const { pacienteActivo, startLoadPaciente } = usePacienteStore();
 
@@ -30,6 +31,22 @@ export const PacienteHistorial = () => {
     startLoadAntecedentes(id_pac);
     handleChangeTabs(parseInt(localStorage.getItem("lastTabPaciente")) || 0);
   }, []);
+
+  useEffect(() => {
+    if (pacienteActivo) {
+      console.log(pacienteActivo);
+      console.log("aaaaa");
+      savePacienteSidebar({
+        to: pacienteActivo.id,
+        title: pacienteActivo.nombre,
+        arrCons: [],
+      });
+    }
+
+    return () => {
+      //eliminar pacientes
+    };
+  }, [pacienteActivo]);
 
   return (
     <div>
