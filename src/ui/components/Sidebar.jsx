@@ -1,57 +1,26 @@
 import { useEffect } from "react";
-import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
-import "react-pro-sidebar/dist/css/styles.css";
-
-/*iconos MUI */
-// import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-// import  from "@mui/icons-material/CalendarTodayOutlined";
-// import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { SideBarItem } from "./SideBarItem";
-
-import { useUiStore } from "../../hooks";
-import { SubMenuItem } from "./SubMenuItem";
 import {
   AdminPanelSettingsOutlined,
   CalendarTodayOutlined,
   Groups,
   MenuOutlined,
-  PersonOutlined,
 } from "@mui/icons-material";
+import "react-pro-sidebar/dist/css/styles.css";
 
+/*iconos MUI */
+import { SideBarItem } from "./SideBarItem";
+
+import { SubMenuItem } from "./SubMenuItem";
+
+import { useUiStore } from "../../hooks";
 //
 //
 /**el sidebar se renderiza con cada click */
-// title={"Valeria Ramirez"}
-// to={"/pacientes/37/historial"}
-// icon={<HomeOutlinedIcon />}
-
-const menuListSidebar = [
-  {
-    title: "Miguel ",
-    // to: "/pacientes/32/historial",
-    to: "32",
-    arrCons: [{ id: "13", text: "20/06/2023" }],
-  },
-  {
-    title: "Ana",
-    to: "30",
-    arrCons: [
-      { id: "24", text: "tttttttttttttttttttttt" },
-      { id: "25", text: "tttttttttttttttttttttt" },
-    ],
-  },
-  {
-    title: "Ronny Bryan Forty Palma",
-    // to: "/pacientes/25/historial",
-    to: "25",
-    arrCons: [
-      { id: "11", text: "tttttttttttttttttttttt" },
-      { id: "21", text: "tttttttttttttttttttttt" },
-    ],
-  },
-];
+//
+//
+//
 
 export const Sidebar = () => {
   //
@@ -102,14 +71,9 @@ export const Sidebar = () => {
         },
 
         "& .pro-sub-menu > .pro-inner-item > .pro-item-content ": {
-          // ":focus": {
           color: "#3a1956",
           fontWeight: "bold",
           paddingRight: "15px",
-
-          // fontSize: "15px",
-
-          // },
         },
         "& .pro-inner-item:focus >  .pro-item-content ": {
           color: "white",
@@ -118,16 +82,6 @@ export const Sidebar = () => {
           {
             color: "white",
           },
-        // "& .pro-inner-list-item > div > ul > ": {
-        //   backgroundColor: "yellow",
-        // },
-
-        // "& .pro-sub-menu.open > .pro-inner-item > .pro-item-content ": {
-        //   // ":focus": {
-        //   color: "white",
-
-        //   // },
-        // },
       }}
     >
       {/*true(esta contraido) false(esta extendido el sidebar)*/}
@@ -235,37 +189,18 @@ export const Sidebar = () => {
             paddingLeft={!isSidebarOpen && "3%"}
             paddingRight={!isSidebarOpen && "3%"}
           >
-            {/* {menuListSidebar.map((menu, index) => {
-              return (
-                <SideBarItem
-                  key={index}
-                  title={menu.title}
-                  to={menu.to}
-                  icon={menu.icon}
-                />
-              );
-            })} */}
             <SideBarItem
               title={"Agenda"}
               to={"/agenda"}
               icon={<CalendarTodayOutlined />}
             />
-            {/* <SubMenuItem
-              title={"Pacientes"}
-              to={"/pacientes"}
-              icon={<PersonOutlined />}
-            /> */}
+
             <SideBarItem
               title={"Pacientes"}
               to={"/pacientes"}
               icon={<Groups />}
             />
-            {/* <SubMenu> */}
-            {/* <SideBarItem
-          title={"Agenda"}
-          to={"/agenda"}
-          icon={<CalendarTodayOutlined />}
-        /> */}
+
             {!isSidebarOpen &&
               listaPacienteSidebar.map((menu, index) => {
                 return (

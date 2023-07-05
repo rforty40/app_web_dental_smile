@@ -22,6 +22,7 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
   const { handleChangeTabsCons, saveConsultaSidebar } = useUiStore();
 
   const { pacienteActivo } = usePacienteStore();
+
   //hook
   const [opeViewFoto, setOpeViewFoto] = useState(false);
   const [stateDataFoto, setStateDataFoto] = useState({});

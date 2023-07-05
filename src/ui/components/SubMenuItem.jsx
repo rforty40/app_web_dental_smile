@@ -1,18 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MenuItem, SubMenu } from "react-pro-sidebar";
-import { Box, IconButton, Typography } from "@mui/material";
-import { useUiStore } from "../../hooks";
-import {
-  CalendarTodayOutlined,
-  Close,
-  Groups,
-  PersonOutlined,
-} from "@mui/icons-material";
-import { SideBarItem } from "./SideBarItem";
-import { useState } from "react";
+import { IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { TbDental } from "react-icons/tb";
+import { useUiStore } from "../../hooks";
 import { invertDateFormat } from "../../agenda/helpers/formatedDataCite";
+
+//
+//
+//
 
 export const SubMenuItem = ({ title, to, arrCons }) => {
   //
@@ -27,15 +24,7 @@ export const SubMenuItem = ({ title, to, arrCons }) => {
     }, 10);
   };
 
-  const [open, setOpen] = useState(false);
-
-  const [classSelect, setclassSelect] = useState("not_selected_submenu");
-
-  const { pageActive } = useUiStore();
-
   const onClickConsulta = (id) => {
-    // const submenuPac = document.querySelector(".submenu_custom");
-    // submenuPac.classList.add("seleccionado");
     navigate("pacientes");
     setTimeout(() => {
       navigate("pacientes/" + to + "/historial/" + id);
@@ -47,7 +36,6 @@ export const SubMenuItem = ({ title, to, arrCons }) => {
   };
 
   const deleteConsulta = (id) => {
-    console.log(to, id);
     deleteConsultaSidebar({ id_pac: to, id_con: id });
   };
 
@@ -59,7 +47,7 @@ export const SubMenuItem = ({ title, to, arrCons }) => {
       >
         <Close
           sx={{
-            fontSize: "15px",
+            fontSize: "17px",
             ":hover": {
               color: "white",
             },
@@ -89,12 +77,11 @@ export const SubMenuItem = ({ title, to, arrCons }) => {
                 }}
                 onClick={() => {
                   deleteConsulta(cons.id);
-                  console.log("first");
                 }}
               >
                 <Close
                   sx={{
-                    fontSize: "15px",
+                    fontSize: "17px",
                     ":hover": {
                       color: "white",
                     },

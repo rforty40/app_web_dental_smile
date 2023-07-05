@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { MdPostAdd } from "react-icons/md";
 import { ButtonCustom, CustomTable } from "../../ui";
@@ -13,7 +14,6 @@ import {
   EditCalendarOutlined,
   Event,
 } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 
 const TABLE_HEAD = [
   { id: "cuando", label: "¿Cuándo?", alignLeft: true },

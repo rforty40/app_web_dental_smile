@@ -34,18 +34,12 @@ export const PacienteHistorial = () => {
 
   useEffect(() => {
     if (pacienteActivo) {
-      console.log(pacienteActivo);
-      console.log("aaaaa");
       savePacienteSidebar({
         to: pacienteActivo.id,
         title: pacienteActivo.nombre,
         arrCons: [],
       });
     }
-
-    return () => {
-      //eliminar pacientes
-    };
   }, [pacienteActivo]);
 
   return (
