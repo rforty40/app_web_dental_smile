@@ -94,6 +94,8 @@ export const useTipTratamStore = () => {
   };
 
   const startDeletingTipTratam = async (arrIdTipTratam = []) => {
+    dispatch(clearErrorTipTratamMsg());
+
     try {
       if (arrIdTipTratam.length === 0) {
         await deleteTipoTratam(tipoTratamActivo.id);
@@ -103,8 +105,28 @@ export const useTipTratamStore = () => {
         }
       }
       dispatch(onDeleteTipoTratam(arrIdTipTratam));
+
+      dispatch(
+        onChangeRegErrTipTratam({
+          msg: "Sin errores en la eliminacion",
+          error: "",
+        })
+      );
     } catch (error) {
       console.log(error);
+
+      let msgError = error.response.data.message || "";
+      if (msgError.includes("fk_tratamiento_planTerapeutico")) {
+        msgError =
+          "No se puede eliminar el tratamiento porque esta siendo usado en las consultas registradas";
+      }
+
+      dispatch(
+        onChangeRegErrTipTratam({
+          msg: "Hay errores en la eliminacion",
+          error: msgError,
+        })
+      );
     }
   };
 

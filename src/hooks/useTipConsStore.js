@@ -91,6 +91,8 @@ export const useTipConsStore = () => {
   };
 
   const startDeletingTipCons = async (arrIdTipCons = []) => {
+    dispatch(clearErrorTipConsMsg());
+
     try {
       if (arrIdTipCons.length === 0) {
         await deleteTipoCons(tipoConsActivo.id);
@@ -100,8 +102,28 @@ export const useTipConsStore = () => {
         }
       }
       dispatch(onDeleteTipoCons(arrIdTipCons));
+
+      dispatch(
+        onChangeRegErrTipCons({
+          msg: "Sin errores en la eliminacion",
+          error: "",
+        })
+      );
     } catch (error) {
       console.log(error);
+      let msgError = error.response.data.message || "";
+
+      if (msgError.includes("fk_tipoConsulta")) {
+        msgError =
+          "No se puede eliminar el tipo de consulta porque esta siendo usado en las consultas registradas";
+      }
+      console.log(msgError);
+      dispatch(
+        onChangeRegErrTipCons({
+          msg: "Hay errores en la eliminacion",
+          error: msgError,
+        })
+      );
     }
   };
 

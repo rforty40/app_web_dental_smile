@@ -11,6 +11,7 @@ import {
 } from "../helpers";
 
 const TABLE_HEAD_TRATAM = [
+  { id: "tratamiento", label: "Tratamiento" },
   { id: "codigo_CIE", label: "Código CIE" },
   { id: "enfermedad", label: "Enfermedad" },
   { id: "fecha", label: "Fecha" },

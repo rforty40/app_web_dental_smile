@@ -23,7 +23,11 @@ import { TxtCompFormTratam } from "./TxtCompFormTratam";
 import { FormModalProcedTratam } from "./FormModalProcedTratam";
 import { TxtProcedFormTratam } from "./TxtProcedFormTratam";
 import { TxtPrescrFormTratam } from "./TxtPrescrFormTratam";
-import { useDiagnosticosStore, useTratamientosStore } from "../../hooks";
+import {
+  useDiagnosticosStore,
+  usePlanesStore,
+  useTratamientosStore,
+} from "../../hooks";
 import { formatDataTratamForm } from "../helpers";
 
 //
@@ -34,6 +38,8 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
   //store
 
   const { diagnosticosList } = useDiagnosticosStore();
+
+  const { planesList } = usePlanesStore();
 
   const {
     tratamActivo,
@@ -46,6 +52,9 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   //hook txt btn
   const [txtButton, setTxtButton] = useState("");
+
+  //hook tipo tratamiento
+  const [stateTipTratam, setStateTipTratam] = useState(null);
 
   //hook enfermedad
   const [stateCodigoCie, setStateCodigoCie] = useState(null);
@@ -93,6 +102,7 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
   //limpiar los componentes del formulario
   const resetInputText = () => {
     setStateCodigoCie(null);
+    setStateTipTratam(null);
     setArrComplicaciones([{ id: 0, txt_compli: "" }]);
     setArrProcedimientos([
       // { id: 0, cod_proced: "", nom_proced: "" }
@@ -200,6 +210,12 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
       );
       setStateCodigoCie(enfermedadCie === undefined ? null : enfermedadCie);
 
+      const tipoTratam = planesList[1].find(
+        (plan) => plan.id_tipoTratam === tratamActivo.id_tipoTratam
+      );
+
+      setStateTipTratam(tipoTratam === undefined ? null : tipoTratam);
+
       setArrComplicaciones(
         tratamActivo.complicaciones.length > 0
           ? formatDataTratamForm(tratamActivo.complicaciones)
@@ -240,10 +256,15 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
 
     //enviando al custom hook
 
-    const codigoCIE = stateCodigoCie === null ? "" : stateCodigoCie.codigoCIE;
+    const codigoCIE =
+      stateCodigoCie !== null ? stateCodigoCie.codigoCIE : stateCodigoCie;
+
+    const tipTratam =
+      stateTipTratam !== null ? stateTipTratam.id_tipoTratam : stateTipTratam;
 
     startSavingTratamiento({
       codigoCIE,
+      tipTratam,
       arrComplicaciones,
       compDeleted,
       arrProcedimientos,
@@ -313,9 +334,9 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
                 paddingTop: "15px",
                 alignItems: "start",
                 gridTemplateColumns: "repeat(3, 1fr)",
-                gridTemplateRows: "repeat(5, max-content)",
+                gridTemplateRows: "repeat(6, max-content)",
                 gridTemplateAreas: `
-                 
+                " tipoTratam tipoTratam ."
                 ". codigoCie codigoCie"
               
               "complicaciones complicaciones complicaciones"
@@ -329,6 +350,38 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
                 columnGap: "20px",
               }}
             >
+              <Grid item gridArea="tipoTratam">
+                <CustomAutocomplete
+                  fullWidth
+                  // disablePortal
+
+                  options={planesList[1].filter(
+                    (plan) => plan.tipoPlan === "Terapéutico"
+                  )}
+                  getOptionLabel={(option) =>
+                    option.tipo_de_tratamiento + " - " + option.tratamiento
+                  }
+                  value={stateTipTratam}
+                  onChange={(event, newValue) => {
+                    setStateTipTratam(newValue);
+                  }}
+                  propsTextField={{
+                    label: "Tipo de tratamiento:",
+                    placeholder: "Seleccione el tipo de tratamiento",
+                  }}
+                  autoFocus
+                  iconAutocomplete={
+                    <img
+                      type="img/svg"
+                      width="25px"
+                      height="25px"
+                      src={`/assets/icons/formTratam/tipoTratamiento.svg`}
+                    />
+                  }
+                  heightList="240px"
+                />
+              </Grid>
+
               <Grid item gridArea="codigoCie">
                 <CustomAutocomplete
                   fullWidth
@@ -467,6 +520,18 @@ export const FormModalTratam = ({ openModal, setOpenModal, title }) => {
                 columnGap="10px"
                 marginTop="30px"
               >
+                <ButtonCustom
+                  altura={"40px"}
+                  colorf={"white"}
+                  colorh={"btnHoverInForm.main"}
+                  colort={"black"}
+                  txt_b={"Cancelar"}
+                  colorth={"white"}
+                  propsXS={{ border: "1px solid black" }}
+                  iconB={<CancelOutlined />}
+                  onClick={cerrarModal}
+                />
+
                 <ButtonCustom
                   tipoBtn="submit"
                   altura="40px"

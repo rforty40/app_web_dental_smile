@@ -56,6 +56,7 @@ export const uiSlice = createSlice({
             state.listaPacienteSidebar[index].arrCons.push({
               id: payload.id_con,
               text: payload.fecha,
+              text2: payload.tipoCons,
             });
           }
 

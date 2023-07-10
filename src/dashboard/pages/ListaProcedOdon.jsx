@@ -28,6 +28,7 @@ export const ListaProcedOdon = () => {
   const {
     procedList,
     procedActivo,
+    errorMsgRegProced,
     changeDataProced,
     startLoadProcedList,
     startDeletingProced,
@@ -40,7 +41,6 @@ export const ListaProcedOdon = () => {
 
   const [stateModalProced, setStateModalProced] = useState(false);
   const [titleFormProced, setTitleFormProced] = useState("");
-  const [msgAlertDel, setMsgAlertDel] = useState("");
 
   //control de modal registrar y editar
   const openModalProcedReg = () => {
@@ -62,6 +62,9 @@ export const ListaProcedOdon = () => {
 
   //control alert de eliminacion
   const [stateSnackbar, setStateSnackbar] = useState(false);
+  const [colorBgSnackbar, setColorBgSnackbar] = useState("");
+  const [msgAlertDel, setMsgAlertDel] = useState("");
+
   const handleCloseSnackbar = () => {
     setStateSnackbar(false);
   };
@@ -70,15 +73,14 @@ export const ListaProcedOdon = () => {
   };
 
   //funcion eliminar uno o varias tipos de consultas
-  const deleteRegisterProced = (selected = []) => {
-    startDeletingProced(selected);
-
+  const deleteRegisterProced = async (selected = []) => {
     if (selected.length <= 1) {
       setMsgAlertDel("Procedimiento fue eliminado.");
     } else {
       setMsgAlertDel("Los procedimientos fueron eliminados exitosamente.");
     }
-    handleOpenSnackbar();
+
+    await startDeletingProced(selected);
   };
 
   //efectos secundarios
@@ -96,6 +98,20 @@ export const ListaProcedOdon = () => {
     }
   }, [dataActiva]);
 
+  //
+  useEffect(() => {
+    if (errorMsgRegProced.msg === "Sin errores en la eliminacion") {
+      setColorBgSnackbar("blueSecondary.main");
+      handleOpenSnackbar();
+    }
+    if (errorMsgRegProced.msg === "Hay errores en la eliminacion") {
+      setMsgAlertDel(errorMsgRegProced.error);
+      setColorBgSnackbar("error.main");
+      handleOpenSnackbar();
+    }
+  }, [errorMsgRegProced]);
+
+  //
   const BtnToolbarTable = () => {
     return (
       <ButtonCustom
@@ -199,9 +215,9 @@ export const ListaProcedOdon = () => {
       <CustomAlert
         stateSnackbar={stateSnackbar}
         handleCloseSnackbar={handleCloseSnackbar}
-        title={"Completado"}
+        title={""}
         message={msgAlertDel}
-        colorbg="blueSecondary.main"
+        colorbg={colorBgSnackbar}
         colortxt="white"
         iconAlert={<DeleteForever sx={{ color: "white" }} />}
       />

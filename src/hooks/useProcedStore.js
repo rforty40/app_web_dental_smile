@@ -103,6 +103,8 @@ export const useProcedStore = () => {
   };
 
   const startDeletingProced = async (arrIdProced = []) => {
+    dispatch(clearErrorProcedMsg());
+
     try {
       if (arrIdProced.length === 0) {
         await deleteProcedimiento(procedActivo.id);
@@ -112,11 +114,36 @@ export const useProcedStore = () => {
         }
       }
       dispatch(onDeleteProced(arrIdProced));
+
+      dispatch(
+        onChangeRegErrProced({
+          msg: "Sin errores en la eliminacion",
+          error: "",
+        })
+      );
     } catch (error) {
       console.log(error);
+
+      let msgError = error.response.data.message || "";
+
+      if (
+        msgError.includes("fk_Tratamiento_has_procedimiento_procedimiento1")
+      ) {
+        msgError =
+          "No se puede eliminar el procedimiento porque esta siendo usado en el registro de un tratamiento";
+      }
+
+      dispatch(
+        onChangeRegErrProced({
+          msg: "Hay errores en la eliminacion",
+          error: msgError,
+        })
+      );
     }
   };
 
+  //
+  //
   const startLoadTitulosList = async () => {
     try {
       const { data } = await getTitulos();

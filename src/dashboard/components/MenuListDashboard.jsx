@@ -14,7 +14,7 @@ export const MenuListDashboard = ({ txtLabel, route }) => {
         borderRadius: "5px",
         height: "100%",
         width: "35%",
-        padding: "10px 10px 10px 25px",
+        padding: "10px 15px",
         textDecoration: "none",
         transition: "color 0.5s, background-color 0.5s",
         ":hover": {

@@ -62,14 +62,14 @@ export const FormTipTratam = ({
 
   useEffect(() => {
     if (title.toUpperCase().includes("EDITAR")) {
-      setMsgAlert(`Se actualizaron los datos del tipo de tratamiento 🙂.`);
+      setMsgAlert(`Se actualizaron los datos del tratamiento 🙂.`);
       setTxtButton("Actualizar");
       if (tipoTratamActivo) {
         setStateRadioTt(tipoTratamActivo.tipo_de_tratamiento);
         setStateTratamiento(tipoTratamActivo.tratamiento);
       }
     } else {
-      setMsgAlert(`Tipo de tratamiento registrado con éxito 🙂.`);
+      setMsgAlert(`Tratamiento registrado con éxito 🙂.`);
       setTxtButton("Registrar");
       setStateRadioTt("");
       setStateTratamiento("");

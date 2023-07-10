@@ -26,17 +26,18 @@ export const ListaTiposConsOdon = () => {
   const {
     tipoConsList,
     tipoConsActivo,
+    errorMsgRegTipoCons,
     startLoadTipConsList,
     changeDataTipCons,
     startDeletingTipCons,
   } = useTipConsStore();
+
   const { dataActiva } = useDataStore();
 
   //hooks
 
   const [stateModalTipCons, setStateModalTipCons] = useState(false);
   const [titleFormTipCons, setTitleFormTipCons] = useState("");
-  const [msgAlertDel, setMsgAlertDel] = useState("");
 
   //control de modal registrar y editar
   const openModalTipConsReg = () => {
@@ -58,6 +59,9 @@ export const ListaTiposConsOdon = () => {
 
   //control alert de eliminacion
   const [stateSnackbar, setStateSnackbar] = useState(false);
+  const [colorBgSnackbar, setColorBgSnackbar] = useState("");
+  const [msgAlertDel, setMsgAlertDel] = useState("");
+
   const handleCloseSnackbar = () => {
     setStateSnackbar(false);
   };
@@ -67,14 +71,12 @@ export const ListaTiposConsOdon = () => {
 
   //funcion eliminar uno o varias tipos de consultas
   const deleteRegisterTipCons = async (selected = []) => {
-    await startDeletingTipCons(selected);
-
     if (selected.length <= 1) {
       setMsgAlertDel("Tipo de consulta fue eliminado.");
     } else {
       setMsgAlertDel("Los tipos de consulta fueron eliminados exitosamente.");
     }
-    handleOpenSnackbar();
+    await startDeletingTipCons(selected);
   };
 
   //efectos secundarios
@@ -90,6 +92,18 @@ export const ListaTiposConsOdon = () => {
       changeDataTipCons(dataActiva[1]);
     }
   }, [dataActiva]);
+
+  useEffect(() => {
+    if (errorMsgRegTipoCons.msg === "Sin errores en la eliminacion") {
+      setColorBgSnackbar("blueSecondary.main");
+      handleOpenSnackbar();
+    }
+    if (errorMsgRegTipoCons.msg === "Hay errores en la eliminacion") {
+      setMsgAlertDel(errorMsgRegTipoCons.error);
+      setColorBgSnackbar("error.main");
+      handleOpenSnackbar();
+    }
+  }, [errorMsgRegTipoCons]);
 
   const BtnToolbarTable = () => {
     return (
@@ -139,7 +153,7 @@ export const ListaTiposConsOdon = () => {
           fontWeight="bold"
           color="primary.main"
         >
-          Lista de tipos de consultas odontológica
+          Lista de tipos de consultas odontológicas
         </Typography>
       </Box>
       <Box
@@ -195,9 +209,9 @@ export const ListaTiposConsOdon = () => {
       <CustomAlert
         stateSnackbar={stateSnackbar}
         handleCloseSnackbar={handleCloseSnackbar}
-        title={"Completado"}
+        title={""}
         message={msgAlertDel}
-        colorbg="blueSecondary.main"
+        colorbg={colorBgSnackbar}
         colortxt="white"
         iconAlert={<DeleteForever sx={{ color: "white" }} />}
       />

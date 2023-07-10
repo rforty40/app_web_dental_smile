@@ -14,7 +14,7 @@ export const TxtProcedFormTratam = ({ data, fnDelete }) => {
           readOnly: true,
         }}
         value={
-          data.cod_proced.length > 0
+          data.cod_proced
             ? data.cod_proced + " - " + data.nom_proced
             : data.nom_proced
         }

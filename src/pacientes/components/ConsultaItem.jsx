@@ -1,4 +1,4 @@
-import { Box, CardMedia, Grid, Typography } from "@mui/material";
+import { CardMedia, Grid, Typography } from "@mui/material";
 import { ButtonCustom, CustomStandardTF } from "../../ui";
 import { DeleteOutlined, EditNoteOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +48,7 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
       id_pac: pacienteActivo.id,
       id_con: consultaItem.id_consulta,
       fecha: consultaItem.fecha_consulta,
+      tipoCons: consultaItem.tipo_tipoConsul,
     });
   };
 
@@ -57,15 +58,37 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
   };
 
   const diagnosticosStr = consultaItem.diagnosticos.reduce((acc, diag) => {
+    const diagnostico = diag.Diagnosticos.split("-");
+
     acc = `${acc}\n${
-      diag.Diagnosticos.split("-")[0] +
-      "-" +
-      diag.Diagnosticos.split("-")[1].slice(0, 2) +
-      diag.Diagnosticos.split("-")[1].slice(2).toLowerCase()
+      diagnostico[0] +
+      " - " +
+      diagnostico[1].slice(0, 2) +
+      diagnostico[1].slice(2).toLowerCase() +
+      `${diagnostico[2] === undefined ? "" : " - " + diagnostico[2]}`
     }`;
+
     return acc;
   }, "");
 
+  const planesDiag = consultaItem.planesD.reduce((acc, planAct) => {
+    acc = `${acc}\n${planAct.PlanesDiag}`;
+    return acc;
+  }, "");
+
+  const planesTera = consultaItem.planesT.reduce((acc, planAct) => {
+    acc = `${acc}\n Tratamiento ${planAct.tipo_tipoTratam} - ${
+      planAct.tratam_tipoTratam
+    } ${planAct.desc_planDiag === null ? "" : " - " + planAct.desc_planDiag}`;
+    return acc;
+  }, "");
+
+  const planesEdu = consultaItem.planesE.reduce((acc, planAct) => {
+    acc = `${acc}\n${planAct.desc_planDiag}`;
+    return acc;
+  }, "");
+
+  //
   return (
     <>
       <Grid
@@ -194,6 +217,39 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
             />
           )}
 
+          {consultaItem.planesD.length > 0 && (
+            <CustomStandardTF
+              multiline
+              value={planesDiag}
+              helperText="Planes de Diagnóstico"
+              colorTxt={colorChoose ? "white" : "black"}
+              colorHelp={colorChoose ? "#02ECEE" : "#602A90"}
+              colorBrd={colorChoose ? "white" : "#602A90"}
+            />
+          )}
+
+          {consultaItem.planesT.length > 0 && (
+            <CustomStandardTF
+              multiline
+              value={planesTera}
+              helperText="Planes Terapéuticos"
+              colorTxt={colorChoose ? "white" : "black"}
+              colorHelp={colorChoose ? "#02ECEE" : "#602A90"}
+              colorBrd={colorChoose ? "white" : "#602A90"}
+            />
+          )}
+
+          {consultaItem.planesE.length > 0 && (
+            <CustomStandardTF
+              multiline
+              value={planesEdu}
+              helperText="Planes Educacionales"
+              colorTxt={colorChoose ? "white" : "black"}
+              colorHelp={colorChoose ? "#02ECEE" : "#602A90"}
+              colorBrd={colorChoose ? "white" : "#602A90"}
+            />
+          )}
+
           {diagnosticosStr.length > 0 && (
             <CustomStandardTF
               multiline
@@ -207,12 +263,19 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
 
           {consultaItem.tratamientos.length > 0 &&
             consultaItem.tratamientos.map((tratam) => {
+              const tratamientoLine =
+                `${
+                  tratam.tratamiento === null ? "" : tratam.tratamiento + " - "
+                }` +
+                `${tratam.codigoCIE === null ? "" : tratam.codigoCIE + " - "}` +
+                invertDateFormat(tratam.fecha_tratamiento);
+
               return (
                 <>
                   <CustomStandardTF
                     key={tratam.id_tratam}
                     multiline
-                    value={"\n" + invertDateFormat(tratam.Tratamiento)}
+                    value={"\n" + tratamientoLine}
                     helperText="Tratamiento"
                     colorTxt={colorChoose ? "white" : "black"}
                     colorHelp={colorChoose ? "#02ECEE" : "#602A90"}
@@ -227,9 +290,14 @@ export const ConsultaItem = ({ consultaItem, iteratorColor }) => {
                       value={tratam.procedimientos.reduce(
                         (acc, procAct, index) => {
                           if (index === 0) {
-                            acc = `${procAct.Procedimiento}`;
+                            acc =
+                              `${
+                                procAct.codigo ? procAct.codigo + " - " : ""
+                              }` + `${procAct.procedimiento}`;
                           } else {
-                            acc = `${acc}\n${procAct.Procedimiento}`;
+                            acc = `${acc}\n ${
+                              procAct.codigo ? procAct.codigo + " - " : ""
+                            } ${procAct.procedimiento}`;
                           }
                           return acc;
                         },

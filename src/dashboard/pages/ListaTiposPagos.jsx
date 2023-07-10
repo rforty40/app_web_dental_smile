@@ -110,7 +110,7 @@ export const ListaTiposPagos = () => {
   //al tipo de pago activo
 
   useEffect(() => {
-    if (dataActiva[0] === "Tipos de pago") {
+    if (dataActiva[0] === "Tipos de pagos") {
       changeDataTipPago(dataActiva[1]);
     }
   }, [dataActiva]);
@@ -145,7 +145,7 @@ export const ListaTiposPagos = () => {
           fontWeight="bold"
           color="primary.main"
         >
-          Lista de tipos de pago
+          Lista de tipos de pagos
         </Typography>
 
         <Box
@@ -206,7 +206,7 @@ export const ListaTiposPagos = () => {
             iconosEnFila={false}
             columnaABuscarPri="tipo_de_pago"
             searchWhat={"Buscar tipo de pago ..."}
-            txt_header={"Tipos de pago"}
+            txt_header={"Tipos de pagos"}
             // bgColorPagination="white"
             // dataOmitida={3}
             openModalEdit={openModalTipPagoEdit}

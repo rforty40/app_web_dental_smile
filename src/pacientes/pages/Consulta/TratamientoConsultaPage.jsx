@@ -58,7 +58,7 @@ export const TratamientoConsultaPage = () => {
           }}
         >
           <Typography variant="h6" fontWeight="bold">
-            Tratamiento
+            Tratamientos
           </Typography>
           <ButtonCustom
             altura="40px"

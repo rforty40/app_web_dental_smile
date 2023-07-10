@@ -21,12 +21,16 @@ export const ConsultaPanelItem = ({ consultaItem }) => {
   const { handleChangeTabsCons, handleChangeTabs } = useUiStore();
 
   const diagnosticosStr = consultaItem.diagnosticos.reduce((acc, diag) => {
+    const diagnostico = diag.Diagnosticos.split("-");
+
     acc = `${acc}\n${
-      diag.Diagnosticos.split("-")[0] +
-      "-" +
-      diag.Diagnosticos.split("-")[1].slice(0, 2) +
-      diag.Diagnosticos.split("-")[1].slice(2).toLowerCase()
+      diagnostico[0] +
+      " - " +
+      diagnostico[1].slice(0, 2) +
+      diagnostico[1].slice(2).toLowerCase() +
+      `${diagnostico[2] === undefined ? "" : " - " + diagnostico[2]}`
     }`;
+
     return acc;
   }, "");
 
@@ -213,12 +217,19 @@ export const ConsultaPanelItem = ({ consultaItem }) => {
 
           {consultaItem.tratamientos.length > 0 &&
             consultaItem.tratamientos.map((tratam) => {
+              const tratamientoLine =
+                `${
+                  tratam.tratamiento === null ? "" : tratam.tratamiento + " - "
+                }` +
+                `${tratam.codigoCIE === null ? "" : tratam.codigoCIE + " - "}` +
+                invertDateFormat(tratam.fecha_tratamiento);
+
               return (
                 <>
                   <CustomStandardTF
                     key={tratam.id_tratam}
                     multiline
-                    value={"\n" + invertDateFormat(tratam.Tratamiento)}
+                    value={"\n" + tratamientoLine}
                     helperText="Tratamiento"
                     colorTxt="black"
                     colorHelp="#602A90"
@@ -233,9 +244,14 @@ export const ConsultaPanelItem = ({ consultaItem }) => {
                       value={tratam.procedimientos.reduce(
                         (acc, procAct, index) => {
                           if (index === 0) {
-                            acc = `${procAct.Procedimiento}`;
+                            acc =
+                              `${
+                                procAct.codigo ? procAct.codigo + " - " : ""
+                              }` + `${procAct.procedimiento}`;
                           } else {
-                            acc = `${acc}\n${procAct.Procedimiento}`;
+                            acc = `${acc}\n ${
+                              procAct.codigo ? procAct.codigo + " - " : ""
+                            } ${procAct.procedimiento}`;
                           }
                           return acc;
                         },

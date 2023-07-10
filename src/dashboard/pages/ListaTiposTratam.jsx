@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Portal, Typography } from "@mui/material";
 import { DeleteForever } from "@mui/icons-material";
 import { MdPostAdd } from "react-icons/md";
 import {
@@ -43,17 +43,16 @@ export const ListaTiposTratam = () => {
   const [stateTipo, setStateTipo] = useState("Todos");
   const [stateModalTipTratam, setStateModalTipTratam] = useState(false);
   const [titleFormTiTratam, setTitleFormTiTratam] = useState("");
-  const [msgAlertDel, setMsgAlertDel] = useState("");
 
   //control de modal registrar y editar
   const openModalTipTratamReg = () => {
     changeDataTipTratam({});
-    setTitleFormTiTratam("Registro de tipo de tratamiento");
+    setTitleFormTiTratam("Registrar tratamiento");
     setStateModalTipTratam(true);
   };
 
   const openModalTipTratamEdit = () => {
-    setTitleFormTiTratam("Editar tipo de tratamiento");
+    setTitleFormTiTratam("Editar tratamiento");
     setStateModalTipTratam(true);
   };
 
@@ -66,6 +65,9 @@ export const ListaTiposTratam = () => {
 
   //control alert de eliminacion
   const [stateSnackbar, setStateSnackbar] = useState(false);
+  const [msgAlertDel, setMsgAlertDel] = useState("");
+  const [colorBgSnackbar, setColorBgSnackbar] = useState("");
+
   const handleCloseSnackbar = () => {
     setStateSnackbar(false);
   };
@@ -74,18 +76,29 @@ export const ListaTiposTratam = () => {
   };
 
   //funcion eliminar uno o varias tipos de pagos
-  const deleteRegisterTipTratam = (selected = []) => {
-    startDeletingTipTratam(selected);
-
+  const deleteRegisterTipTratam = async (selected = []) => {
     if (selected.length <= 1) {
-      setMsgAlertDel("Tipo de tratamiento fue eliminado.");
+      setMsgAlertDel("Tratamiento eliminado.");
     } else {
-      setMsgAlertDel(
-        "Los tipos de tratamientos fueron eliminados exitosamente."
-      );
+      setMsgAlertDel("Los tratamientos fueron eliminados exitosamente.");
     }
-    handleOpenSnackbar();
+
+    await startDeletingTipTratam(selected);
   };
+
+  useEffect(() => {
+    if (errorMsgRegTipoTratam.msg === "Sin errores en la eliminacion") {
+      setColorBgSnackbar("blueSecondary.main");
+      handleOpenSnackbar();
+    }
+    if (errorMsgRegTipoTratam.msg === "Hay errores en la eliminacion") {
+      setMsgAlertDel(errorMsgRegTipoTratam.error);
+      setColorBgSnackbar("error.main");
+      handleOpenSnackbar();
+    }
+  }, [errorMsgRegTipoTratam]);
+
+  //
 
   //efectos secundarios
   useEffect(() => {
@@ -118,7 +131,7 @@ export const ListaTiposTratam = () => {
   //efecto secundario pasar la info del registro de la tabla
   //al tipo de pago activo
   useEffect(() => {
-    if (dataActiva[0] === "Tipos de tratamiento") {
+    if (dataActiva[0] === "Lista de tratamientos odontológicos") {
       changeDataTipTratam(dataActiva[1]);
     }
   }, [dataActiva]);
@@ -152,7 +165,7 @@ export const ListaTiposTratam = () => {
           fontWeight="bold"
           color="primary.main"
         >
-          Lista de tipos de tratamiento
+          Lista de tratamientos odontológicos
         </Typography>
 
         <Box
@@ -162,7 +175,7 @@ export const ListaTiposTratam = () => {
           alignItems="end"
         >
           <CustomSelect
-            lblText="Tipos de tratamiento:"
+            lblText="Tipo de tratamiento:"
             altura="42px"
             ancho="330px"
             listOptions={[
@@ -182,7 +195,7 @@ export const ListaTiposTratam = () => {
             colorh={"black"}
             colort={"white"}
             colorth={"celesteNeon.main"}
-            txt_b={"Agregar tipo de tratamiento"}
+            txt_b={"Agregar tratamiento"}
             flexDir="row"
             txt_b_size="17px"
             // fontW="bold"
@@ -204,8 +217,7 @@ export const ListaTiposTratam = () => {
         alignItems="center"
         sx={{ backgroundColor: "rgba(255,255,255,0.8)" }}
       >
-        {errorMsgRegTipoTratam.msg !==
-        "No se encontraron los tipos de tratamientos" ? (
+        {errorMsgRegTipoTratam.msg !== "No se encontraron los tratamientos" ? (
           <CustomTable
             TABLE_HEAD={TABLE_HEAD}
             DATALIST={tipoTratamList}
@@ -214,8 +226,8 @@ export const ListaTiposTratam = () => {
             withButton={false}
             iconosEnFila={false}
             columnaABuscarPri="tratamiento"
-            searchWhat={"Buscar tipo de tratamiento..."}
-            txt_header={"Tipos de tratamiento"}
+            searchWhat={"Buscar tratamiento..."}
+            txt_header={"Lista de tratamientos odontológicos"}
             openModalEdit={openModalTipTratamEdit}
             funcionBtnTblDelete={handleOpenDialogDel}
             funcionDeleteVarious={deleteRegisterTipTratam}
@@ -246,15 +258,17 @@ export const ListaTiposTratam = () => {
         funcionDelete={deleteRegisterTipTratam}
       />
 
-      <CustomAlert
-        stateSnackbar={stateSnackbar}
-        handleCloseSnackbar={handleCloseSnackbar}
-        title={"Completado"}
-        message={msgAlertDel}
-        colorbg="blueSecondary.main"
-        colortxt="white"
-        iconAlert={<DeleteForever sx={{ color: "white" }} />}
-      />
+      <Portal>
+        <CustomAlert
+          stateSnackbar={stateSnackbar}
+          handleCloseSnackbar={handleCloseSnackbar}
+          title={""}
+          message={msgAlertDel}
+          colorbg={colorBgSnackbar}
+          colortxt="white"
+          iconAlert={<DeleteForever sx={{ color: "white" }} />}
+        />
+      </Portal>
     </div>
   );
 };

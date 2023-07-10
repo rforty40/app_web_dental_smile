@@ -31,7 +31,10 @@ const columnEquivalent = {
 
 export const comprobarErrorTipCons = (typeError) => {
   let msgError = "";
-  if (
+
+  if (typeError.includes("tipoconsulta_tbl.tipo_consulta_UNIQUE")) {
+    msgError = "El tipo de consulta ya fue registrado";
+  } else if (
     typeError.includes("Data too long for column") ||
     typeError.includes("Out of range value")
   ) {

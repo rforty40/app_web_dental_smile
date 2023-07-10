@@ -177,21 +177,18 @@ export const useTratamientosStore = () => {
 
     try {
       let tratamNew = null;
-      // const codigoCIEformat =
-      //   tratamiento.codigoCIE === ""
-      //     ? {}
-      //     : { codigoCIE: tratamiento.codigoCIE };
-      const codigoCIEformat =
-        tratamiento.codigoCIE === ""
-          ? { codigoCIE: null }
-          : { codigoCIE: tratamiento.codigoCIE };
+
+      const objectToBD = {
+        codigoCIE: tratamiento.codigoCIE,
+        id_tipoTratam: tratamiento.tipTratam,
+      };
 
       if (tratamActivo) {
         //actualizando
 
         const { data } = await updateTratamiento(
           tratamActivo.id_tratam,
-          codigoCIEformat
+          objectToBD
         );
 
         tratamNew = data;
@@ -199,7 +196,7 @@ export const useTratamientosStore = () => {
         //registrando
         const { data } = await createTratamiento(
           consultaActiva.id_consulta,
-          codigoCIEformat
+          objectToBD
         );
         tratamNew = data;
         // tratamIdReg = data.id_tratam;

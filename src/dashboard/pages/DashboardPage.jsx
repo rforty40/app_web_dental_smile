@@ -324,15 +324,15 @@ export const DashboardPage = () => {
           route={"listaprocedimientosodon"}
         />
         <MenuListDashboard
-          txtLabel={"Lista de tipos de consulta odontológica"}
+          txtLabel={"Lista de tipos de consultas odontológicas"}
           route={"listatiposconsodon"}
         />
         <MenuListDashboard
-          txtLabel={"Lista de tipos de tratamiento"}
+          txtLabel={"Lista de tratamientos odontológicos"}
           route={"listatipostratam"}
         />
         <MenuListDashboard
-          txtLabel={"Lista de tipos de pago"}
+          txtLabel={"Lista de tipos de pagos"}
           route={"listatipospagos"}
         />
         <MenuListDashboard

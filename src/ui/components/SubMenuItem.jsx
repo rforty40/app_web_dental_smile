@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { MenuItem, SubMenu } from "react-pro-sidebar";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { TbDental } from "react-icons/tb";
@@ -105,7 +105,17 @@ export const SubMenuItem = ({ title, to, arrCons }) => {
                   onClickConsulta(cons.id);
                 }}
               >
-                {invertDateFormat(cons.text)}
+                <Typography sx={{ color: "#562682", fontWeight: "bold" }}>
+                  {invertDateFormat(cons.text)}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#562682",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {cons.text2}
+                </Typography>
               </MenuItem>
             </div>
           );

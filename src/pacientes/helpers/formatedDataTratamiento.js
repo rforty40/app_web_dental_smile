@@ -4,6 +4,7 @@ export const formatearDataTratamToTable = (tratamiento) => {
   return tratamiento.map((tratam) => {
     return {
       id: tratam.id_tratam,
+      tratamiento: tratam.tratamiento === null ? "" : tratam.tratamiento,
       codigo: tratam.codigoCIE === null ? "" : tratam.codigoCIE,
       enfermedad:
         tratam.nombre_enfermedad === null ? "" : tratam.nombre_enfermedad,

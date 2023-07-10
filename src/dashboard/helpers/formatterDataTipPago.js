@@ -31,7 +31,10 @@ const columnEquivalent = {
 
 export const comprobarErrorTipPago = (typeError) => {
   let msgError = "";
-  if (
+
+  if (typeError.includes("tipopago_tbl.desc_tipPago_UNIQUE")) {
+    msgError = "El tipo de pago ya fue registrado";
+  } else if (
     typeError.includes("Data too long for column") ||
     typeError.includes("Out of range value")
   ) {
